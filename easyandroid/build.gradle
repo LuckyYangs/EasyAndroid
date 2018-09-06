@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-core-utils:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+//rxpermission
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
+
+// matisse
+    implementation 'it.sephiroth.android.library.imagezoom:library:1.0.4'
+    compileOnly 'com.github.bumptech.glide:glide:4.7.1'
+    compileOnly 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
+
+//  skeleton
+    implementation 'com.facebook.rebound:rebound:0.3.8'
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
+
+}

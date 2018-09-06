@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.androidbigguy.easyandroiddemo">
+
+    <!-- if you want to load images from the internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- if you want to load images from a file OR from the internet -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.androidbigguy.easyandroiddemo.KyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/app"
+        android:label="@string/app_name"
+        android:maxAspectRatio="256"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.androidbigguy.easyandroiddemo.resfresh.ResFreshActivity"
+            android:launchMode="singleTask" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.ClassicsActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.GeogleActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.SunActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.CircleActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.BerActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.TextActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.MaiDianActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.IphoneActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.WaterActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.resfresh.BalloonActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.banner.BannarActivity" />
+        <activity
+            android:name="com.androidbigguy.easyandroiddemo.main.WelcomeActivity"
+            android:theme="@style/AppSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.androidbigguy.easyandroiddemo.main.MainActivity"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.main.GuideActivity" />
+        <activity android:name="com.androidbigguy.easyandroiddemo.main.ToutiaoActivity" />
+    </application>
+
+</manifest>

@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.androidbigguy.easyandroid" >
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application>
+        <provider
+            android:name=".InitProvider"
+            android:authorities="${applicationId}.autosize-init-provider"
+            android:exported="false"/>
+
+        <activity android:name="com.androidbigguy.easyandroid.matisse.ui.MatisseActivity"/>
+        <activity android:name="com.androidbigguy.easyandroid.matisse.internal.ui.AlbumPreviewActivity"/>
+        <activity android:name="com.androidbigguy.easyandroid.matisse.internal.ui.SelectedPreviewActivity"/>
+    </application>
+</manifest>

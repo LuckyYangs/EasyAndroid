@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@mipmap/carome"
+            android:title="文件选择" />
+        <item
+            android:id="@+id/nav_refresh"
+            android:icon="@mipmap/sxjz"
+            android:title="刷新加载" />
+        <item
+            android:id="@+id/nav_banner"
+            android:icon="@mipmap/lb"
+            android:title="轮播图" />
+        <item
+            android:id="@+id/nav_tool"
+            android:icon="@mipmap/gjx"
+            android:title="工具类" />
+    </group>
+    <group
+        android:id="@+id/theme">
+        <item
+            android:iconTint="@color/colorAccent"
+            android:icon="@mipmap/theme"
+            android:title="主题切换"/>
+    </group>
+    <group
+        android:id="@+id/themecolor">
+            <item
+                android:id="@+id/nav_tbc"
+                android:iconTint="@color/colorAccent"
+                android:icon="@mipmap/af"
+                android:title="黑色" />
+            <item
+                android:id="@+id/nav_tby"
+                android:iconTint="@color/colorAccent"
+                android:icon="@mipmap/ay"
+                android:title="黄色" />
+    </group>
+    <group
+        android:id="@+id/about">
+        <item
+            android:id="@+id/nav_about"
+            android:iconTint="@color/colorAccent"
+            android:icon="@mipmap/icon_like"
+            android:title="关于框架"/>
+    </group>
+</menu>
