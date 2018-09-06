@@ -5,7 +5,7 @@
 
     <application>
         <provider
-            android:name=".InitProvider"
+            android:name="com.androidbigguy.easyandroid.screenautosize.InitProvider"
             android:authorities="${applicationId}.autosize-init-provider"
             android:exported="false"/>
 
