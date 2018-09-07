@@ -32,4 +32,6 @@
 
     <color name="light_transparent">#16000000</color>
     <color name="dark_transparent">#24000000</color>
+
+    <color name="noteline">#E3E3E3</color>
 </resources>
