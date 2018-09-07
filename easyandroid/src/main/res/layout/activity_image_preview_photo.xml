@@ -4,7 +4,7 @@
     android:background="@android:color/transparent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.previewlibrary.wight.PhotoViewPager
+    <com.androidbigguy.easyandroid.imagepreview.wight.PhotoViewPager
         android:background="@android:color/transparent"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:text="1/2"
          >
     </TextView>
-    <com.previewlibrary.wight.BezierBannerView
+    <com.androidbigguy.easyandroid.imagepreview.wight.BezierBannerView
         android:id="@+id/bezierBannerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
