@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.androidbigguy.easyandroiddemo.R;
 import com.androidbigguy.easyandroid.utils.StatusBarUtil;
 
 

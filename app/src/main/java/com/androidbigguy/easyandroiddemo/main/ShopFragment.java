@@ -24,6 +24,7 @@ import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.alibaba.android.vlayout.layout.OnePlusNLayoutHelper;
 import com.alibaba.android.vlayout.layout.StaggeredGridLayoutHelper;
+import com.androidbigguy.easyandroid.utils.GlideUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
@@ -280,7 +281,8 @@ public class ShopFragment extends Fragment {
                 LinearLayout gd_itme=holder.getView(R.id.gd_itme);
                 ImageView iv_ic=holder.getView(R.id.iv_ic);
                 tv_title.setText(iconlist.get(position).getTitle());
-                Glide.with(getActivity()).load(iconlist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_ic);
+                GlideUtils.loadImage(getActivity(),iconlist.get(position).getImageUrl(),iv_ic);
+//                Glide.with(getActivity()).load(iconlist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_ic);
                 gd_itme.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -357,7 +359,8 @@ public class ShopFragment extends Fragment {
                 super.onBindViewHolder(holder, position);
                 FrameLayout ont_itme =holder.getView(R.id.ont_itme);
                 ImageView iv_otn =holder.getView(R.id.iv_otn);
-                Glide.with(getActivity()).load(otnlist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_otn);
+                GlideUtils.loadImage(getActivity(),otnlist.get(position).getImageUrl(),iv_otn);
+//                Glide.with(getActivity()).load(otnlist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_otn);
 
                 ont_itme.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -429,7 +432,8 @@ public class ShopFragment extends Fragment {
                 CardView ll_dp=holder.getView(R.id.ll_dp);
                 tv_dpdes.setText(dplist.get(position).getTitle());
                 tv_dpname.setText(dplist.get(position).getBiaoti());
-                Glide.with(getActivity()).load(dplist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_dp);
+                GlideUtils.loadImage(getActivity(),dplist.get(position).getImageUrl(),iv_dp);
+//                Glide.with(getActivity()).load(dplist.get(position).getImageUrl()).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_dp);
                 ll_dp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -508,7 +512,8 @@ public class ShopFragment extends Fragment {
                 CardView ll_new=holder.getView(R.id.ll_new);
                 tv_newt.setText(newlist.get(position).getTitle());
                 tv_newc.setText(newlist.get(position).getContent());
-                Glide.with(getActivity()).load(newlist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_new);
+                GlideUtils.loadImage(getActivity(),newlist.get(position).getImageUrl(),iv_new);
+//                Glide.with(getActivity()).load(newlist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_new);
 
                 ll_new.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -602,7 +607,8 @@ public class ShopFragment extends Fragment {
                 CardView ll_dp=holder.getView(R.id.ll_dp);
                 tv_dpdes.setText(sdplist.get(position).getTitle());
                 tv_dpname.setText(sdplist.get(position).getBiaoti());
-                Glide.with(getActivity()).load(sdplist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_dp);
+                GlideUtils.loadImage(getActivity(),sdplist.get(position).getImageUrl(),iv_dp);
+//                Glide.with(getActivity()).load(sdplist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_dp);
                 ll_dp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
