@@ -47,9 +47,6 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  
 public class GlideUtils {
 
-    public static final int placeholderSoWhite = R.color.white;
-    public static final int errorSoWhite = R.color.white;
-    // public static final int soWhite = R.color.white;
 
     /*
      *加载图片(默认)
@@ -57,8 +54,8 @@ public class GlideUtils {
     public static void loadImage(Context context, String url, ImageView imageView) {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(placeholderSoWhite) //占位图
-                .error(R.color.white)       //错误图
+                .placeholder(R.mipmap.zwt) //占位图
+                .error(R.mipmap.error)       //错误图
                 // .priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context).load(url).apply(options).into(imageView);
@@ -79,8 +76,8 @@ public class GlideUtils {
     public static void loadImageSize(Context context, String url, ImageView imageView, int width, int height) {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(placeholderSoWhite) //占位图
-                .error(R.color.white)       //错误图
+                .placeholder(R.mipmap.zwt) //占位图
+                .error(R.mipmap.error)       //错误图
                 .override(width, height)
                 // .priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -101,7 +98,7 @@ public class GlideUtils {
 
     public static void loadImageSizekipMemoryCache(Context context, String url, ImageView imageView) {
         RequestOptions options = new RequestOptions()
-                .placeholder(placeholderSoWhite) //占位图
+                .placeholder(R.mipmap.zwt) //占位图
                 .error(R.color.white)       //错误图S
                 .skipMemoryCache(true)//禁用掉Glide的内存缓存功能
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -117,8 +114,8 @@ public class GlideUtils {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .circleCrop()//设置圆形
-                .placeholder(placeholderSoWhite)
-                .error(errorSoWhite)
+                .placeholder(R.mipmap.zwt)
+                .error(R.mipmap.error)
                 //.priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context).load(url).apply(options).into(imageView);
@@ -143,8 +140,8 @@ public class GlideUtils {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .circleCrop()//设置圆形
-                .placeholder(placeholderSoWhite)
-                .error(errorSoWhite)
+                .placeholder(R.mipmap.zwt)
+                .error(R.mipmap.error)
                 //.priority(Priority.HIGH)
                 .bitmapTransform(new RoundedCornersTransformation(45, 0, RoundedCornersTransformation.CornerType.ALL))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -164,8 +161,8 @@ public class GlideUtils {
     public static void loadCustRoundCircleImage(Context context, String url, ImageView imageView, RoundedCornersTransformation.CornerType type) {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(placeholderSoWhite)
-                .error(errorSoWhite)
+                .placeholder(R.mipmap.zwt)
+                .error(R.mipmap.error)
                 //.priority(Priority.HIGH)
                 .bitmapTransform(new RoundedCornersTransformation(45, 0, type))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -185,8 +182,8 @@ public class GlideUtils {
     public static void loadBlurImage(Context context, String url, ImageView imageView, int blur) {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(placeholderSoWhite)
-                .error(errorSoWhite)
+                .placeholder(R.mipmap.zwt)
+                .error(R.mipmap.error)
                 //.priority(Priority.HIGH)
                 .bitmapTransform(new BlurTransformation(blur))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -199,8 +196,8 @@ public class GlideUtils {
     public static void loadBlackImage(Context context, String url, ImageView imageView) {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(placeholderSoWhite)
-                .error(errorSoWhite)
+                .placeholder(R.mipmap.zwt)
+                .error(R.mipmap.error)
                 //.priority(Priority.HIGH)
                 .bitmapTransform(new GrayscaleTransformation())
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -219,8 +216,8 @@ public class GlideUtils {
      */
     private void loadGif(Context context, String url, ImageView imageView) {
         RequestOptions options = new RequestOptions()
-                .placeholder(placeholderSoWhite)
-                .error(errorSoWhite);
+                .placeholder(R.mipmap.zwt)
+                .error(R.mipmap.error);
         Glide.with(context)
                 .load(url)
                 .apply(options)
