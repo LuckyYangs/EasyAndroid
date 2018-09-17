@@ -114,7 +114,7 @@ public class GlideUtils {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .circleCrop()//设置圆形
-                .placeholder(R.mipmap.zwt)
+                .placeholder(R.mipmap.touxiang)
                 .error(R.mipmap.error)
                 //.priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
