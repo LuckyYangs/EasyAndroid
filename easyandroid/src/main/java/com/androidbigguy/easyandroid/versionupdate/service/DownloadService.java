@@ -48,12 +48,7 @@ public class DownloadService extends Service {
     private boolean mDismissNotificationProgress = false;
 
     public static void bindService(Context context, ServiceConnection connection) {
-//        Intent intent = new Intent(context, DownloadService.class);
-//        context.startService(intent);
-//        context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
-//        修改Unable to start service Intent not found问题及Service无法拉起也无报错问题
-        Intent intent = new Intent();
-        intent.setClass(context, DownloadService.class);
+        Intent intent = new Intent(context, DownloadService.class);
         context.startService(intent);
         context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
         isRunning = true;

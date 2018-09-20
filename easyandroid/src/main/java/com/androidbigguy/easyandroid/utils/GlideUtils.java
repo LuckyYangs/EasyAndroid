@@ -115,7 +115,7 @@ public class GlideUtils {
                 .centerCrop()
                 .circleCrop()//设置圆形
                 .placeholder(R.mipmap.touxiang)
-                .error(R.mipmap.error)
+                .error(R.mipmap.touxiang)
                 //.priority(Priority.HIGH)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context).load(url).apply(options).into(imageView);
