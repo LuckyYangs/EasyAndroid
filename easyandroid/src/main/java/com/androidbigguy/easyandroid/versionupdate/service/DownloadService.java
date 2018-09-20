@@ -1,5 +1,4 @@
-package com.vector.versionupdate.service;
-
+package com.androidbigguy.easyandroid.versionupdate.service;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
