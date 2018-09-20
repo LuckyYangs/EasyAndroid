@@ -1,4 +1,4 @@
-package com.androidbigguy.easyandroid.versionupdate.service;
+package com.vector.versionupdate.service;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -64,7 +64,7 @@ public class DownloadService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
     }
 
     @Override
