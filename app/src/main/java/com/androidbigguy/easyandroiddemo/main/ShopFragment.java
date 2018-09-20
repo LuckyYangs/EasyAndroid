@@ -282,7 +282,6 @@ public class ShopFragment extends Fragment {
                 ImageView iv_ic=holder.getView(R.id.iv_ic);
                 tv_title.setText(iconlist.get(position).getTitle());
                 GlideUtils.loadImage(getActivity(),iconlist.get(position).getImageUrl(),iv_ic);
-//                Glide.with(getActivity()).load(iconlist.get(position).getImageUrl()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv_ic);
                 gd_itme.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
