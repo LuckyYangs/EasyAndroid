@@ -1,4 +1,17 @@
 <resources>
+    <!--<string name="app_name">VersionCheckLib</string>-->
+    <string name="versionchecklib_confirm">确认</string>
+    <string name="versionchecklib_cancel">取消</string>
+    <string name="versionchecklib_retry">重试</string>
+    <string name="versionchecklib_download_fail_retry">下载失败是否重试？</string>
+    <string name="versionchecklib_download_finish">下载完成，点击安装</string>
+    <string name="versionchecklib_downloading">正在下载中...</string>
+    <string name="versionchecklib_check_new_version">检测到新版本</string>
+    <string name="versionchecklib_download_progress">下载进度:%d%%/100%%</string>
+    <string name="versionchecklib_download_fail">下载失败，点击重试</string>
+    <string name="versionchecklib_progress">%d/100</string>
+    <string name="versionchecklib_write_permission_deny">下载安装包需要读写文件权限。</string>
+    <string name="versionchecklib_download_apkname">%s.apk</string>
     <!--photopreview-->
     <string name="__picker_title">图片</string>
     <string name="__picker_delete">删除</string>
@@ -45,7 +58,7 @@
     <item name="item_image_key" type="id" />
 
     <string name="icon">icon</string>
-    <string name="app_name">LsLibrary</string>
+    <string name="app_name">EasyAndroid</string>
     <integer-array name="material_colors">
         <item>@color/material_red</item>
         <item>@color/material_green</item>

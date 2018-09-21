@@ -43,5 +43,8 @@ dependencies {
 //  skeleton
     implementation 'com.facebook.rebound:rebound:0.3.8'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
+//versionchecklib
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
 }

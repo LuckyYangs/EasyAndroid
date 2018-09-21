@@ -205,9 +205,7 @@ public class AppUpdateUtils {
 
                 drawable.getIntrinsicHeight(),
 
-                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-
-                        : Bitmap.Config.RGB_565);
+                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
 
         Canvas canvas = new Canvas(bitmap);
 

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--appupdata-->
+    <item name="versionchecklib_version_dialog_commit" type="id" />
+    <item name="versionchecklib_failed_dialog_retry" type="id" />
+    <item name="versionchecklib_failed_dialog_cancel" type="id" />
+    <item name="versionchecklib_version_dialog_cancel" type="id" />
+    <item name="versionchecklib_loading_dialog_cancel" type="id" />
+
+
     <item name="BaseQuickAdapter_viewholder_support" type="id"/>
     <item name="BaseQuickAdapter_swiping_support" type="id"/>
     <item name="BaseQuickAdapter_dragging_support" type="id"/>
