@@ -99,7 +99,7 @@ public class GlideUtils {
     public static void loadImageSizekipMemoryCache(Context context, String url, ImageView imageView) {
         RequestOptions options = new RequestOptions()
                 .placeholder(R.mipmap.zwt) //占位图
-                .error(R.color.white)       //错误图S
+                .error(R.mipmap.error)     //错误图S
                 .skipMemoryCache(true)//禁用掉Glide的内存缓存功能
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context).load(url).apply(options).into(imageView);

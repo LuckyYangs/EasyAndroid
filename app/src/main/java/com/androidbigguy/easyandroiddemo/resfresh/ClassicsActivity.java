@@ -1,6 +1,9 @@
 package com.androidbigguy.easyandroiddemo.resfresh;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -8,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
+import com.androidbigguy.easyandroid.recyclerviewitemDecoration.ListDecoration;
 import com.androidbigguy.easyandroiddemo.BaseActivity;
 import com.androidbigguy.easyandroiddemo.R;
 import com.androidbigguy.easyandroid.refreshlayout.layout.EasyRefreshLayout;
@@ -16,16 +21,18 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.listener.OnLoadMoreLis
 import com.androidbigguy.easyandroid.refreshlayout.layout.listener.OnRefreshListener;
 import com.androidbigguy.easyandroid.utils.ActivityUtil;
 import com.androidbigguy.easyandroid.utils.ToastUtil;
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClassicsActivity extends BaseActivity {
-    ListView lv;
+    ShimmerRecyclerView lv;
     TextView tilte;
     Toolbar toolbar;
-    ArrayAdapter<String> adapter;
+    BaseresfresAdapter adapter;
     private EasyRefreshLayout refreshLayout;
-    ArrayList data =new ArrayList();
+    List<StringEntity> data =new ArrayList();
 
     @Override
     protected void setContentView() {
@@ -36,7 +43,12 @@ public class ClassicsActivity extends BaseActivity {
     protected void initView() {
         toolbar =findViewById(R.id.toolbara);
         tilte=findViewById(R.id.title);
-        lv=findViewById(R.id.clv);
+        lv=findViewById(R.id.shimmer_recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        lv.setLayoutManager(layoutManager);
+        lv.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+
         tilte.setText("经典模式");
         refreshLayout=findViewById(R.id.refreshLayout);
         refreshLayout.setEnableFooterFollowWhenLoadFinished(true);
@@ -48,19 +60,37 @@ public class ClassicsActivity extends BaseActivity {
                 finish();
             }
         });
+
+        adapter=new BaseresfresAdapter(this,R.layout.item,data);
+        //        设置加载动画
+        adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+//        动画只第一次加载
+        adapter.isFirstOnly(true);
+        lv.setAdapter(adapter);
+        lv.showShimmerAdapter();
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                ToastUtil.show(getApplicationContext(),"This is "+position+"数据");
+            }
+        });
     }
 
     @Override
     protected void initData() {
-        intdata();
-        adapter=new ArrayAdapter<String>(this,R.layout.item,data);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtil.show(getApplicationContext(),"你点击了第"+position+"条数据");
+            public void run() {
+
+                /**
+                 * 延时执行的代码
+                 */
+                intdata();
             }
-        });
+        },3000); // 延时1秒
+
+
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -94,14 +124,19 @@ public class ClassicsActivity extends BaseActivity {
 
     private  void adddata() {
         for (int j=0;j<5;j++){
-            data.add("新增第"+j+"条数据");
+            StringEntity stringEntity=new StringEntity();
+            stringEntity.setContent("第"+j+"条数据");
+            data.add(stringEntity);
         }
     }
     private  void intdata() {
         data.clear();
-        for (int i=0;i<10;i++){
-            data.add("第"+i+"条数据");
+        for (int i=0;i<15;i++){
+            StringEntity stringEntity=new StringEntity();
+            stringEntity.setContent("第"+i+"条数据");
+            data.add(stringEntity);
         }
+        lv.hideShimmerAdapter();
     }
 
     @Override

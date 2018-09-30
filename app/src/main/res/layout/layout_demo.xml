@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="@dimen/kj_space_5"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/kj_space_30">
+    <View
+        android:alpha="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#9B9C9C"/>
+</LinearLayout>

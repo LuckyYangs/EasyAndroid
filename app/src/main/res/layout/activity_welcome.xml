@@ -14,8 +14,8 @@
         android:layout_height="match_parent" />
     <com.androidbigguy.easyandroid.view.CountDownView
         android:id="@+id/cdv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/kj_space_80"
+        android:layout_height="@dimen/kj_space_80"
         android:layout_gravity="top|right"
         android:layout_marginTop="40dp"
         android:layout_marginRight="20dp"

@@ -18,7 +18,7 @@ public class PhoneIdCheckUtils {
      *判断是否是身份证
      */
     public  static  boolean isId(String s){
-        String idnum = "^\\d{15}|\\d{18}$";
+        String idnum = "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x)$)";
         return s.matches(idnum);
     }
 }

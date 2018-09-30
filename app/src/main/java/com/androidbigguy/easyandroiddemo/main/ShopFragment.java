@@ -287,7 +287,7 @@ public class ShopFragment extends Fragment {
                     public void onClick(View v) {
                         switch (position) {
                             case 0:
-                                ToastUtil.show(getActivity(),"敬请期待");
+                                ActivityUtil.startAty(getActivity(), FilepickerActivity.class);
                                 break;
                             case 1:
                                 ActivityUtil.startWithdata(getActivity(),"type","utils",BannarActivity.class);
@@ -647,7 +647,7 @@ public class ShopFragment extends Fragment {
 
 
 //        SingleLayoutHelper layoutHelper = new SingleLayoutHelper();
-//        adapter_footer =new BaseDelegateAdapter(getActivity(),layoutHelper,R.layout.item_footer,1, MainActivity.ViewType.NEWTITLE){
+//        adapter_footer =new BaseDelegateAdapter(getActivity(),layoutHelper,R.layout_demo.item_footer,1, MainActivity.ViewType.NEWTITLE){
 //            @Override
 //            public void onBindViewHolder(BaseViewHolder holder, int position) {
 //                super.onBindViewHolder(holder, position);

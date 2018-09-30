@@ -55,14 +55,14 @@ public class WelcomeActivity extends Activity {
 //
 //            }
 //        },5000);
-        WaveAnim.fullActivity(WelcomeActivity.this,cdvTime)
-                .colorOrImageRes(R.color.colorPrimary)
-                .go(new WaveAnim.OnAnimationEndListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        ActivityUtil.startAty(WelcomeActivity.this,MainActivity.class);
-                    }
-                });
+//        WaveAnim.fullActivity(WelcomeActivity.this,cdvTime)
+//                .colorOrImageRes(R.color.colorPrimary)
+//                .go(new WaveAnim.OnAnimationEndListener() {
+//                    @Override
+//                    public void onAnimationEnd() {
+//                        ActivityUtil.startAty(WelcomeActivity.this,MainActivity.class);
+//                    }
+//                });
     }
   public  void jump(){
       if(!isfirst){
