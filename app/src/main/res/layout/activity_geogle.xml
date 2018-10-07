@@ -24,7 +24,9 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             />
-
+        <com.androidbigguy.easyandroid.refreshlayout.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </com.androidbigguy.easyandroid.refreshlayout.layout.EasyRefreshLayout>
 
 
