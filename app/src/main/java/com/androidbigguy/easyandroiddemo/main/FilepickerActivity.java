@@ -55,6 +55,7 @@ ListView listView;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            Matisse.obtainPathResult(data).get(0).toString();
             adapter=new photoAdapter(FilepickerActivity.this, Matisse.obtainPathResult(data));
             listView.setAdapter(adapter);
 //            mAdapter.setData(Matisse.obtainResult(data), Matisse.obtainPathResult(data),SampleActivity.this);
