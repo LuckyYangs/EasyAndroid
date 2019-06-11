@@ -17,3 +17,4 @@ public interface IExpandable<T> {
      */
     int getLevel();
 }
+

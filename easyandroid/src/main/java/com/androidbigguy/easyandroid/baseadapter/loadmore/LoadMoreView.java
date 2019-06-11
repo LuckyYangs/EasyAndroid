@@ -3,7 +3,6 @@ package com.androidbigguy.easyandroid.baseadapter.loadmore;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 
-import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
 import com.androidbigguy.easyandroid.baseadapter.BaseViewHolder;
 
 
@@ -12,7 +11,6 @@ import com.androidbigguy.easyandroid.baseadapter.BaseViewHolder;
  */
 
 public abstract class LoadMoreView {
-
     public static final int STATUS_DEFAULT = 1;
     public static final int STATUS_LOADING = 2;
     public static final int STATUS_FAIL = 3;
@@ -51,21 +49,23 @@ public abstract class LoadMoreView {
                 visibleLoadFail(holder, false);
                 visibleLoadEnd(holder, false);
                 break;
+            default:
+                break;
         }
     }
 
     private void visibleLoading(BaseViewHolder holder, boolean visible) {
-        holder.setVisible(getLoadingViewId(), visible);
+        holder.setGone(getLoadingViewId(), visible);
     }
 
     private void visibleLoadFail(BaseViewHolder holder, boolean visible) {
-        holder.setVisible(getLoadFailViewId(), visible);
+        holder.setGone(getLoadFailViewId(), visible);
     }
 
     private void visibleLoadEnd(BaseViewHolder holder, boolean visible) {
-        final int loadEndViewId=getLoadEndViewId();
+        final int loadEndViewId = getLoadEndViewId();
         if (loadEndViewId != 0) {
-            holder.setVisible(loadEndViewId, visible);
+            holder.setGone(loadEndViewId, visible);
         }
     }
 
@@ -73,26 +73,30 @@ public abstract class LoadMoreView {
         this.mLoadMoreEndGone = loadMoreEndGone;
     }
 
-    public final boolean isLoadEndMoreGone(){
-        if(getLoadEndViewId()==0){
+    public final boolean isLoadEndMoreGone() {
+        if (getLoadEndViewId() == 0) {
             return true;
         }
-        return mLoadMoreEndGone;}
+        return mLoadMoreEndGone;
+    }
 
     /**
      * No more data is hidden
+     *
      * @return true for no more data hidden load more
-     * @deprecated Use {@link BaseQuickAdapter#loadMoreEnd(boolean)} instead.
      */
     @Deprecated
-    public boolean isLoadEndGone(){return mLoadMoreEndGone;}
+    public boolean isLoadEndGone() {
+        return mLoadMoreEndGone;
+    }
 
     /**
      * load more layout
      *
      * @return
      */
-    public abstract @LayoutRes
+    public abstract
+    @LayoutRes
     int getLayoutId();
 
     /**
@@ -100,7 +104,8 @@ public abstract class LoadMoreView {
      *
      * @return
      */
-    protected abstract @IdRes
+    protected abstract
+    @IdRes
     int getLoadingViewId();
 
     /**
@@ -108,7 +113,8 @@ public abstract class LoadMoreView {
      *
      * @return
      */
-    protected abstract @IdRes
+    protected abstract
+    @IdRes
     int getLoadFailViewId();
 
     /**
@@ -116,6 +122,7 @@ public abstract class LoadMoreView {
      *
      * @return
      */
-    protected abstract @IdRes
+    protected abstract
+    @IdRes
     int getLoadEndViewId();
 }

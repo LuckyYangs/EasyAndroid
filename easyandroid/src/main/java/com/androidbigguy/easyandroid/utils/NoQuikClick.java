@@ -3,7 +3,7 @@ package com.androidbigguy.easyandroid.utils;
 
 
 
-public class NoQuikClick {
+public  class NoQuikClick {
     // 两次点击按钮之间的点击间隔不能少于300毫秒
     private static final int MIN_CLICK_DELAY_TIME = 300;
     private static long lastClickTime;

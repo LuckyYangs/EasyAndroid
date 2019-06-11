@@ -52,7 +52,7 @@
     <string name="button_sure_default">确定</string>
     <string name="button_sure">确定(%1$d)</string>
 
-    <dimen name="yms_dimens_50.0_px">25.0dp</dimen>
+    <dimen name="yms_dimens_50px">25.0dp</dimen>
     <string name="string_count">%1$s/%2$s</string>
     <string name="Playback_failed">播放失败</string>
     <item name="item_image_key" type="id" />
@@ -110,5 +110,7 @@
 
     <string name="load_failed">加载失败，请点我重试</string>
     <string name="load_end">没有更多数据</string>
-
+    <string name="brvah_loading">正在加载中...</string>
+    <string name="brvah_load_failed">加载失败，请点我重试</string>
+    <string name="brvah_load_end">没有更多数据</string>
 </resources>

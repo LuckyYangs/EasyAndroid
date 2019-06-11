@@ -2,8 +2,6 @@ package com.androidbigguy.easyandroid.baseadapter.listener;
 
 import android.view.View;
 
-import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
-
 
 /**
  * Created by AllenCoder on 2016/8/03.
@@ -15,10 +13,9 @@ import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
  */
 public abstract   class OnItemClickListener extends SimpleClickListener {
 
-
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        onSimpleItemClick(adapter,view,position);
+        onSimpleItemClick(adapter, view, position);
     }
 
     @Override
@@ -35,5 +32,6 @@ public abstract   class OnItemClickListener extends SimpleClickListener {
     public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
 
     }
+
     public abstract void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position);
 }

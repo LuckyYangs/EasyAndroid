@@ -1,6 +1,8 @@
 package com.androidbigguy.easyandroid.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 /**
@@ -16,7 +18,25 @@ public class DateUtil {
     private static String mMonth;
     private static String mDay;
     private static String mWay;
+    private static String mHour;
+    private static String mMinute;
+    private static String mSecond;
 
+    /**
+     *
+     * @return 获取年月日时分秒 例2019-08-09 12:08:06
+     */
+    public static String getTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// HH:mm:ss
+        //获取当前时间
+        Date date = new Date(System.currentTimeMillis());
+        return simpleDateFormat.format(date);
+    }
+
+    /**
+     *
+     * @return 获取年月日
+     */
     public static String getDay(){
         final Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));

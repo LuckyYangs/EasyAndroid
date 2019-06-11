@@ -25,6 +25,6 @@ public class ScaleInAnimation implements BaseAnimation {
   public Animator[] getAnimators(View view) {
     ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", mFrom, 1f);
     ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", mFrom, 1f);
-    return new ObjectAnimator[] { scaleX, scaleY };
+    return new ObjectAnimator[]{scaleX, scaleY};
   }
 }

@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
-import com.androidbigguy.easyandroid.baseadapter.BaseViewHolder;
 
 /**
  * 基类适配器

@@ -2,8 +2,6 @@ package com.androidbigguy.easyandroiddemo.main;
 
 
 import com.androidbigguy.easyandroiddemo.R;
-import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
-import com.androidbigguy.easyandroid.baseadapter.BaseViewHolder;
 
 import java.util.List;
 

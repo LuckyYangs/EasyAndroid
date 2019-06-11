@@ -3,6 +3,12 @@ package com.androidbigguy.easyandroid.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
 
              /~~~~~\        /~~~~~\
@@ -102,6 +108,42 @@ public class SharedPreferencesUtil {
         }
 
         return null;
+    }
+    /**
+     * 保存List
+     */
+    public static  void setDataList(Context context, String FileName, String key, List<String> datalist) {
+        SharedPreferences sp = context.getSharedPreferences(FileName, 0);
+        SharedPreferences.Editor editor = sp.edit();
+        if (null == datalist || datalist.size() <= 0)
+            return;
+
+        Gson gson = new Gson();
+        //转换成json数据，再保存
+        String strJson = gson.toJson(datalist);
+        editor.putString(key, strJson);
+        editor.commit();
+
+    }
+
+    /**
+     * 获取List
+     * @param key
+     * @return
+     */
+    public static ArrayList<String> getDataList(Context context, String FileName, String key) {
+        SharedPreferences sp = context.getSharedPreferences(FileName, 0);
+        SharedPreferences.Editor editor = sp.edit();
+        ArrayList<String> datalist=new ArrayList<String>();
+        String strJson = sp.getString(key, null);
+        if (null == strJson) {
+            return datalist;
+        }
+        Gson gson = new Gson();
+        datalist = gson.fromJson(strJson, new TypeToken<List<String>>() {
+        }.getType());
+        return datalist;
+
     }
     public static void cleanData(Context context ,String FileName){
         SharedPreferences sp = context.getSharedPreferences(FileName, Context.MODE_PRIVATE);

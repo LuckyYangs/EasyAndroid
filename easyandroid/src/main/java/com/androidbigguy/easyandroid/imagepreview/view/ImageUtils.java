@@ -16,7 +16,7 @@ public class ImageUtils {
      * @return int
      */
     public static int getStatusBarHeight(Context mApplicationContent) {
-        int result = mApplicationContent.getResources().getDimensionPixelSize(R.dimen.yms_dimens_50_0_px);
+        int result = mApplicationContent.getResources().getDimensionPixelSize(R.dimen.yms_dimens_50px);
         int resourceId = mApplicationContent.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = mApplicationContent.getResources().getDimensionPixelSize(resourceId);

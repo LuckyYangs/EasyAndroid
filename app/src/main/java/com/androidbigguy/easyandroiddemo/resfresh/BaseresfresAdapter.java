@@ -2,8 +2,7 @@ package com.androidbigguy.easyandroiddemo.resfresh;
 
 
 import android.content.Context;
-import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
-import com.androidbigguy.easyandroid.baseadapter.BaseViewHolder;
+
 import com.androidbigguy.easyandroiddemo.R;
 
 import java.util.List;

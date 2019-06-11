@@ -5,14 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
-import com.androidbigguy.easyandroid.recyclerviewitemDecoration.ListDecoration;
 import com.androidbigguy.easyandroiddemo.BaseActivity;
 import com.androidbigguy.easyandroiddemo.R;
 import com.androidbigguy.easyandroid.refreshlayout.layout.EasyRefreshLayout;

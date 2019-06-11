@@ -1232,7 +1232,7 @@ public final class SpanUtils {
             Drawable d = getCachedDrawable();
             Rect rect = d.getBounds();
             if (fm != null) {
-//                LogUtils.d("fm.top: " + fm.top,
+//                LogUtilx.d("fm.top: " + fm.top,
 //                        "fm.ascent: " + fm.ascent,
 //                        "fm.descent: " + fm.descent,
 //                        "fm.bottom: " + fm.bottom,
@@ -1265,7 +1265,7 @@ public final class SpanUtils {
             canvas.save();
             float transY;
             int lineHeight = bottom - top;
-//            LogUtils.d("rectHeight: " + rect.height(),
+//            LogUtilx.d("rectHeight: " + rect.height(),
 //                    "lineHeight: " + (bottom - top));
             if (rect.height() < lineHeight) {
                 if (mVerticalAlignment == ALIGN_TOP) {

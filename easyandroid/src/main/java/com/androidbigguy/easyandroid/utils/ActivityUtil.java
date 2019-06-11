@@ -34,6 +34,12 @@ import java.util.Map.Entry;
  */
 
 public class ActivityUtil {
+
+	public static void AtystartAty(Context context, Class<?> clazz) {
+		Intent intent = new Intent();
+		intent.setClass(context, clazz);
+		context.startActivity(intent);
+	}
 	public static void startAty(Context context, Class<?> clazz) {
 		Intent intent = new Intent();
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
