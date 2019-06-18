@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.md.personnelfiles.R;
+import com.androidbigguy.easyandroid.R;
 
 
 public class SideBar extends View {
