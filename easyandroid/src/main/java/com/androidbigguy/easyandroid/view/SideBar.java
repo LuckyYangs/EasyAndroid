@@ -1,11 +1,13 @@
 package com.androidbigguy.easyandroid.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -71,6 +73,7 @@ public class SideBar extends View {
 
 	}
 
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent event) {
 		final int action = event.getAction();
