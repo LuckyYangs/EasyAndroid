@@ -3,6 +3,8 @@ package com.androidbigguy.easyandroiddemo.resfresh;
 
 import android.content.Context;
 
+import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
+import com.androidbigguy.easyandroid.baseadapter.BaseViewHolder;
 import com.androidbigguy.easyandroiddemo.R;
 
 import java.util.List;
@@ -40,7 +42,7 @@ import java.util.List;
  */
 
 
-public class BaseresfresAdapter extends BaseQuickAdapter<StringEntity,BaseViewHolder> {
+public class BaseresfresAdapter extends BaseQuickAdapter<StringEntity, BaseViewHolder> {
 
     Context context;
     int layoutResId;

@@ -16,7 +16,7 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshKernel;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.RefreshState;
 import com.androidbigguy.easyandroid.refreshlayout.layout.internal.InternalAbstract;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
@@ -51,17 +51,18 @@ public class FalsifyHeader extends InternalAbstract implements RefreshHeader {
         super.dispatchDraw(canvas);
         final View thisView = this;
         if (thisView.isInEditMode()) {//这段代码在运行时不会执行，只会在Studio编辑预览时运行，不用在意性能问题
-            int d = DensityUtil.dp2px(5);
+            final int d = SmartUtil.dp2px(5);
+            final Context context = thisView.getContext();
 
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.STROKE);
             paint.setColor(0xcccccccc);
-            paint.setStrokeWidth(DensityUtil.dp2px(1));
+            paint.setStrokeWidth(SmartUtil.dp2px(1));
             paint.setPathEffect(new DashPathEffect(new float[]{d, d, d, d}, 1));
             canvas.drawRect(d, d, thisView.getWidth() - d, thisView.getBottom() - d, paint);
 
-            TextView textView = new TextView(thisView.getContext());
-            textView.setText(thisView.getResources().getString(R.string.srl_component_falsify, getClass().getSimpleName(), DensityUtil.px2dp(thisView.getHeight())));
+            TextView textView = new TextView(context);
+            textView.setText(context.getString(R.string.srl_component_falsify, getClass().getSimpleName(), SmartUtil.px2dp(thisView.getHeight())));
             textView.setTextColor(0xcccccccc);
             textView.setGravity(Gravity.CENTER);
             //noinspection UnnecessaryLocalVariable

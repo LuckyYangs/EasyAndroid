@@ -26,7 +26,7 @@ import com.androidbigguy.easyandroid.R;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshKernel;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.RefreshState;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -96,7 +96,6 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
 
         //<editor-fold desc="init - Curtain">
 
-
         mMaskTextBottom = thisView.getResources().getString(R.string.fgh_mask_bottom);//"拖动控制游戏";//"Scroll to move handle";
         mMaskTextTopPull = thisView.getResources().getString(R.string.fgh_mask_top_pull);//"下拉即将展开";//"Pull To Break Out!";
         mMaskTextTopRelease = thisView.getResources().getString(R.string.fgh_mask_top_release);//"放手即将展开";//"Release To Break Out!";
@@ -124,11 +123,11 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         mShadowView = new RelativeLayout(context);
         mShadowView.setBackgroundColor(0xFF3A3A3A);
 
-        mMaskViewTop = createMaskView(context,mMaskTextTopPull, maskTextSizeTop, Gravity.BOTTOM);
-        mMaskViewBottom = createMaskView(context,mMaskTextBottom, maskTextSizeBottom, Gravity.TOP);
+        mMaskViewTop = createMaskView(context, mMaskTextTopPull, maskTextSizeTop, Gravity.BOTTOM);
+        mMaskViewBottom = createMaskView(context, mMaskTextBottom, maskTextSizeBottom, Gravity.TOP);
 
         if (!thisView.isInEditMode()) {
-            int height = DensityUtil.dp2px(100);
+            int height = SmartUtil.dp2px(100);
             RelativeLayout.LayoutParams maskLp = new RelativeLayout.LayoutParams(MATCH_PARENT, height);
 //            maskLp.topMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
 //            maskLp.bottomMargin = (int) FunGameView.DIVIDING_LINE_SIZE;
@@ -146,7 +145,7 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         //</editor-fold>
 
         //<editor-fold desc="init - Arena">
-        DIVIDING_LINE_SIZE = Math.max(1, DensityUtil.dp2px(0.5f));
+        DIVIDING_LINE_SIZE = Math.max(1, SmartUtil.dp2px(0.5f));
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(DIVIDING_LINE_SIZE);
@@ -230,19 +229,19 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
         switch (status) {
             case STATUS_GAME_PREPARE:
             case STATUS_GAME_PLAY:
-                mPaintText.setTextSize(DensityUtil.dp2px(25));
+                mPaintText.setTextSize(SmartUtil.dp2px(25));
                 promptText(canvas, mTextLoading, width, height);
                 break;
             case STATUS_GAME_FINISHED:
-                mPaintText.setTextSize(DensityUtil.dp2px(20));
+                mPaintText.setTextSize(SmartUtil.dp2px(20));
                 promptText(canvas, mTextLoadingFinish, width, height);
                 break;
             case STATUS_GAME_FAIL:
-                mPaintText.setTextSize(DensityUtil.dp2px(20));
+                mPaintText.setTextSize(SmartUtil.dp2px(20));
                 promptText(canvas, mTextLoadingFailed, width, height);
                 break;
             case STATUS_GAME_OVER:
-                mPaintText.setTextSize(DensityUtil.dp2px(25));
+                mPaintText.setTextSize(SmartUtil.dp2px(25));
                 promptText(canvas, mTextGameOver, width, height);
                 break;
         }
@@ -352,6 +351,9 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
             case ReleaseToRefresh:
                 mMaskViewTop.setText(mMaskTextTopRelease);
                 break;
+//            case ReleaseToTwoLevel:
+//                mMaskViewTop.setText(com.scwang.smartrefresh.layout.R.string.srl_header_secondary);
+//                break;
         }
     }
 
@@ -359,8 +361,8 @@ public abstract class FunGameView<T extends FunGameView> extends FunGameBase {
     public void onStartAnimator(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         super.onStartAnimator(layout, height, maxDragHeight);
         final View topView = mMaskViewTop;
-        final View bottomView = mMaskViewBottom;
         final View shadowView = mShadowView;
+        final View bottomView = mMaskViewBottom;
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(ObjectAnimator.ofFloat(topView, "translationY", topView.getTranslationY(), -mHalfHeaderHeight))
                 .with(ObjectAnimator.ofFloat(bottomView, "translationY", bottomView.getTranslationY(), mHalfHeaderHeight))

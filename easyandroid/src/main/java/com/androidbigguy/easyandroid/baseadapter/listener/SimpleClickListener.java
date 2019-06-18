@@ -8,6 +8,9 @@ import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
+import com.androidbigguy.easyandroid.baseadapter.BaseViewHolder;
+
 import java.util.Set;
 
 import static com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter.EMPTY_VIEW;

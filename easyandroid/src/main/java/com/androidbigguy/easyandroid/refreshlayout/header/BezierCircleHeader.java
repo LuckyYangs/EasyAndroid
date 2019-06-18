@@ -18,10 +18,11 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshHeader;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.SpinnerStyle;
 import com.androidbigguy.easyandroid.refreshlayout.layout.internal.InternalAbstract;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
+
 
 /**
- * @author CircleRefresh
+ * CircleRefresh
  * Created by zhanglei on 15/7/18.
  * from https://github.com/tuesda/CircleRefreshLayout
  */
@@ -68,7 +69,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
         mSpinnerStyle = SpinnerStyle.Scale;
         final View thisView = this;
-        thisView.setMinimumHeight(DensityUtil.dp2px(100));
+        thisView.setMinimumHeight(SmartUtil.dp2px(100));
         mBackPaint = new Paint();
         mBackPaint.setColor(0xff11bbff);
         mBackPaint.setAntiAlias(true);
@@ -79,7 +80,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         mOuterPaint.setAntiAlias(true);
         mOuterPaint.setColor(0xffffffff);
         mOuterPaint.setStyle(Paint.Style.STROKE);
-        mOuterPaint.setStrokeWidth(DensityUtil.dp2px(2f));
+        mOuterPaint.setStrokeWidth(SmartUtil.dp2px(2f));
         mPath = new Path();
     }
 
@@ -116,7 +117,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
             mPath.reset();
             mPath.lineTo(viewWidth, 0);
             mPath.lineTo(viewWidth, baseHeight);
-            mPath.quadTo(viewWidth / 2, baseHeight + mWaveHeight * 2, 0, baseHeight);
+            mPath.quadTo(viewWidth / 2f, baseHeight + mWaveHeight * 2, 0, baseHeight);
             mPath.close();
             canvas.drawPath(mPath, mBackPaint);
         } else {
@@ -126,22 +127,22 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
     private void drawSpringUp(Canvas canvas, int viewWidth) {
         if (mSpringRatio > 0) {
-            float leftX = (viewWidth / 2 - 4 * mBollRadius + mSpringRatio * 3 * mBollRadius);
+            float leftX = (viewWidth / 2f - 4 * mBollRadius + mSpringRatio * 3 * mBollRadius);
             if (mSpringRatio < 0.9) {
                 mPath.reset();
                 mPath.moveTo(leftX, mBollY);
-                mPath.quadTo(viewWidth / 2, mBollY - mBollRadius * mSpringRatio * 2,
+                mPath.quadTo(viewWidth / 2f, mBollY - mBollRadius * mSpringRatio * 2,
                         viewWidth - leftX, mBollY);
                 canvas.drawPath(mPath, mFrontPaint);
             } else {
-                canvas.drawCircle(viewWidth / 2, mBollY, mBollRadius, mFrontPaint);
+                canvas.drawCircle(viewWidth / 2f, mBollY, mBollRadius, mFrontPaint);
             }
         }
     }
 
     private void drawBoll(Canvas canvas, int viewWidth) {
         if (mShowBoll) {
-            canvas.drawCircle(viewWidth / 2, mBollY, mBollRadius, mFrontPaint);
+            canvas.drawCircle(viewWidth / 2f, mBollY, mBollRadius, mFrontPaint);
 
             drawBollTail(canvas, viewWidth, (mHeadHeight + mWaveHeight) / mHeadHeight);
         }
@@ -151,8 +152,8 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         if (mShowBollTail) {
             final float bottom = mHeadHeight + mWaveHeight;
             final float startY = mBollY + mBollRadius * fraction / 2;
-            final float startX = viewWidth / 2 + (float) Math.sqrt(mBollRadius * mBollRadius * (1 - fraction * fraction / 4));
-            final float bezier1x = (viewWidth / 2 + (mBollRadius * 3 / 4) * (1 - fraction));
+            final float startX = viewWidth / 2f + (float) Math.sqrt(mBollRadius * mBollRadius * (1 - fraction * fraction / 4));
+            final float bezier1x = (viewWidth / 2f + (mBollRadius * 3 / 4) * (1 - fraction));
             final float bezier2x = bezier1x + mBollRadius;
 
             mPath.reset();
@@ -176,7 +177,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
             int swipe = mRefreshStop - mRefreshStart;
             swipe = swipe < 0 ? swipe + 360 : swipe;
 
-            canvas.drawArc(new RectF(viewWidth / 2 - outerR, mBollY - outerR, viewWidth / 2 + outerR, mBollY + outerR),
+            canvas.drawArc(new RectF(viewWidth / 2f - outerR, mBollY - outerR, viewWidth / 2f + outerR, mBollY + outerR),
                     mRefreshStart, swipe, false, mOuterPaint);
             if (swipe >= TARGET_DEGREE) {
                 mOuterIsStart = false;
@@ -193,11 +194,11 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
         if (mFinishRatio > 0) {
             int beforeColor = mOuterPaint.getColor();
             if (mFinishRatio < 0.3) {
-                canvas.drawCircle(viewWidth / 2, mBollY, mBollRadius, mFrontPaint);
+                canvas.drawCircle(viewWidth / 2f, mBollY, mBollRadius, mFrontPaint);
                 int outerR = (int) (mBollRadius + mOuterPaint.getStrokeWidth() * 2 * (1+mFinishRatio / 0.3f));
                 int afterColor = ColorUtils.setAlphaComponent(beforeColor, (int) (0xff * (1 - mFinishRatio / 0.3f)));
                 mOuterPaint.setColor(afterColor);
-                canvas.drawArc(new RectF(viewWidth / 2 - outerR, mBollY - outerR, viewWidth / 2 + outerR, mBollY + outerR),
+                canvas.drawArc(new RectF(viewWidth / 2f - outerR, mBollY - outerR, viewWidth / 2f + outerR, mBollY + outerR),
                         0, 360, false, mOuterPaint);
             }
             mOuterPaint.setColor(beforeColor);
@@ -205,7 +206,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
             if (mFinishRatio >= 0.3 && mFinishRatio < 0.7) {
                 float fraction = (mFinishRatio - 0.3f) / 0.4f;
                 mBollY = (int) (mHeadHeight / 2 + (mHeadHeight - mHeadHeight / 2) * fraction);
-                canvas.drawCircle(viewWidth / 2, mBollY, mBollRadius, mFrontPaint);
+                canvas.drawCircle(viewWidth / 2f, mBollY, mBollRadius, mFrontPaint);
                 if (mBollY >= mHeadHeight - mBollRadius * 2) {
                     mShowBollTail = true;
                     drawBollTail(canvas, viewWidth, fraction);
@@ -215,10 +216,10 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
 
             if (mFinishRatio >= 0.7 && mFinishRatio <= 1) {
                 float fraction = (mFinishRatio - 0.7f) / 0.3f;
-                int leftX = (int) (viewWidth / 2 - mBollRadius - 2 * mBollRadius * fraction);
+                int leftX = (int) (viewWidth / 2f - mBollRadius - 2 * mBollRadius * fraction);
                 mPath.reset();
                 mPath.moveTo(leftX, mHeadHeight);
-                mPath.quadTo(viewWidth / 2, mHeadHeight - (mBollRadius * (1 - fraction)),
+                mPath.quadTo(viewWidth / 2f, mHeadHeight - (mBollRadius * (1 - fraction)),
                         viewWidth - leftX, mHeadHeight);
                 canvas.drawPath(mPath, mFrontPaint);
             }
@@ -257,7 +258,7 @@ public class BezierCircleHeader extends InternalAbstract implements RefreshHeade
     public void onReleased(@NonNull RefreshLayout refreshLayout, int height, int maxDragHeight) {
         mWavePulling = false;
         mHeadHeight = height;
-        mBollRadius = height / 6;
+        mBollRadius = height / 6f;
         DecelerateInterpolator interpolator = new DecelerateInterpolator();
         final float reboundHeight = Math.min(mWaveHeight * 0.8f, mHeadHeight / 2);
         ValueAnimator waveAnimator = ValueAnimator.ofFloat(

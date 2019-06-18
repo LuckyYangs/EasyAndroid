@@ -9,9 +9,11 @@ import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.support.v4.content.ContextCompat;
 
+import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
+import com.androidbigguy.easyandroid.baseadapter.BaseViewHolder;
+import com.androidbigguy.easyandroid.utils.SpanUtils;
 import com.androidbigguy.easyandroiddemo.R;
 import com.androidbigguy.easyandroiddemo.vlayout.IconEntity;
-import com.androidbigguy.easyandroid.utils.SpanUtils;
 
 import java.util.List;
 
@@ -48,7 +50,7 @@ import java.util.List;
  */
  
 
-public class UtilsBaseAdapter extends BaseQuickAdapter<IconEntity,BaseViewHolder> {
+public class UtilsBaseAdapter extends BaseQuickAdapter<IconEntity, BaseViewHolder> {
 
     Context context;
     int layoutResId;

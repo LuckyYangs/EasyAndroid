@@ -4,18 +4,19 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
-import com.androidbigguy.easyandroiddemo.BaseActivity;
-import com.androidbigguy.easyandroiddemo.R;
+import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
 import com.androidbigguy.easyandroid.refreshlayout.layout.EasyRefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.listener.OnLoadMoreListener;
 import com.androidbigguy.easyandroid.refreshlayout.layout.listener.OnRefreshListener;
 import com.androidbigguy.easyandroid.utils.ActivityUtil;
 import com.androidbigguy.easyandroid.utils.ToastUtil;
+import com.androidbigguy.easyandroiddemo.BaseActivity;
+import com.androidbigguy.easyandroiddemo.R;
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 
 import java.util.ArrayList;

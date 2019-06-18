@@ -2,6 +2,8 @@ package com.androidbigguy.easyandroid.baseadapter.listener;
 
 import android.view.View;
 
+import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
+
 
 /**
  * create by: allen on 16/8/3.

@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -16,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import android.widget.ImageView;
 
 import com.androidbigguy.easyandroid.R;
 import com.androidbigguy.easyandroid.refreshlayout.header.internal.MaterialProgressDrawable;
@@ -26,7 +27,7 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.RefreshState;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.SpinnerStyle;
 import com.androidbigguy.easyandroid.refreshlayout.layout.internal.InternalAbstract;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
 
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.getSize;
@@ -37,7 +38,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
  * Created by SCWANG on 2017/6/4.
  * from https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
  */
-@SuppressWarnings("ALL")
+@SuppressWarnings("unused")
 public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     /**
@@ -103,11 +104,11 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.setMeasuredDimension(getSize(widthMeasureSpec), getSize(heightMeasureSpec));
         final View waveView = mWaveView;
-        final View cricleView = mCircleView;
+        final View circleView = mCircleView;
         final Drawable progress = mProgress;
         final int circleDiameter = progress.getIntrinsicWidth();
         final int spec = View.MeasureSpec.makeMeasureSpec(circleDiameter, View.MeasureSpec.EXACTLY);
-        cricleView.measure(spec, spec);
+        circleView.measure(spec, spec);
         waveView.measure(makeMeasureSpec(getSize(widthMeasureSpec), EXACTLY),makeMeasureSpec(getSize(heightMeasureSpec), EXACTLY));
     }
 
@@ -115,17 +116,17 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final View thisView = this;
         final View waveView = mWaveView;
-        final View cricleView = mCircleView;
+        final View circleView = mCircleView;
         waveView.layout(0, 0, thisView.getMeasuredWidth(), thisView.getMeasuredHeight());
 
         final int thisWidth = thisView.getMeasuredWidth();
-        final int circleWidth = cricleView.getMeasuredWidth();
-        final int circleHeight = cricleView.getMeasuredHeight();
-        cricleView.layout((thisWidth - circleWidth) / 2, -circleHeight , (thisWidth + circleWidth) / 2, 0);
+        final int circleWidth = circleView.getMeasuredWidth();
+        final int circleHeight = circleView.getMeasuredHeight();
+        circleView.layout((thisWidth - circleWidth) / 2, -circleHeight , (thisWidth + circleWidth) / 2, 0);
 
         if (thisView.isInEditMode()) {
-            onMoving(true, 0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
-//            onPulling(0.99f, DensityUtil.dp2px(99), DensityUtil.dp2px(100), DensityUtil.dp2px(100));
+            onMoving(true, 0.99f, SmartUtil.dp2px(99), SmartUtil.dp2px(100), SmartUtil.dp2px(100));
+//            onPulling(0.99f, SmartUtil.dp2px(99), SmartUtil.dp2px(100), SmartUtil.dp2px(100));
         }
     }
 
@@ -140,6 +141,17 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setColorSchemeColors(colors);
     }
 
+    public void setColorSchemeColorIds(@IdRes int... resources) {
+        final View thisView = this;
+        final Context context = thisView.getContext();
+        final int[] colorRes = new int[resources.length];
+
+        for (int i = 0; i < resources.length; i++) {
+            colorRes[i] = ContextCompat.getColor(context, resources[1]);
+        }
+
+        mProgress.setColorSchemeColors(colorRes);
+    }
     //</editor-fold>
 
     //<editor-fold desc="RefreshHeader">
@@ -150,7 +162,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             if (mState == RefreshState.Refreshing) {
                 return;
             }
-            final View cricleView = mCircleView;
+            final View circleView = mCircleView;
 
             float dragPercent = Math.min(1f, percent);
             float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
@@ -168,7 +180,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
             float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
             mProgress.setProgressRotation(rotation);
-            cricleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
+            circleView.setTranslationY(mWaveView.getCurrentCircleCenterY());
 
             final View thisView = this;
             float seed = 1f * offset / Math.min(thisView.getMeasuredWidth(), thisView.getMeasuredHeight());
@@ -190,6 +202,12 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 //            // stop to draw a wave and drop a circle
 //            onDropPhase();
             }
+        } else if (mLastFirstBounds != 0 && mState == RefreshState.None) {
+            mProgress.showArrow(false);
+            mProgress.setProgressRotation(0);
+            mProgress.setStartEndTrim(0f, 0f);
+            mWaveView.startWaveAnimation(mLastFirstBounds);
+            mLastFirstBounds = 0;
         }
     }
 
@@ -251,9 +269,9 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                final View cricleView = mCircleView;
-                cricleView.setTranslationY(
-                        mWaveView.getCurrentCircleCenterY() + cricleView.getHeight() / 2.f);
+                final View circleView = mCircleView;
+                circleView.setTranslationY(
+                        mWaveView.getCurrentCircleCenterY() + circleView.getHeight() / 2.f);
             }
         });
         animator.start();
@@ -261,15 +279,15 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-        final View cricleView = mCircleView;
+        final View circleView = mCircleView;
         mState = newState;
         switch (newState) {
             case None:
                 break;
             case PullDownToRefresh:
                 mProgress.showArrow(true);
-                cricleView.setScaleX(1f);
-                cricleView.setScaleY(1f);
+                circleView.setScaleX(1f);
+                circleView.setScaleY(1f);
                 mProgress.setAlpha(0xff);
                 break;
             case PullDownCanceled:
@@ -288,29 +306,26 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
-        final View cricleView = mCircleView;
+        final View circleView = mCircleView;
         Animation scaleDownAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
-                cricleView.setScaleX(1 - interpolatedTime);
-                cricleView.setScaleY(1 - interpolatedTime);
+                circleView.setScaleX(1 - interpolatedTime);
+                circleView.setScaleY(1 - interpolatedTime);
             }
         };
         scaleDownAnimation.setDuration(200);
         mCircleView.setAnimationListener(new Animation.AnimationListener() {
-            @Override
             public void onAnimationStart(Animation animation) {}
-            @Override
             public void onAnimationRepeat(Animation animation) {}
-            @Override
             public void onAnimationEnd(Animation animation) {
                 mProgress.stop();
                 mProgress.setAlpha(0xff);
                 mWaveView.startDisappearCircleAnimation();
             }
         });
-        cricleView.clearAnimation();
-        cricleView.startAnimation(scaleDownAnimation);
+        circleView.clearAnimation();
+        circleView.startAnimation(scaleDownAnimation);
         return 0;
     }
 
@@ -352,7 +367,7 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
      *
      * @author jmatsu
      */
-    protected class ProgressAnimationImageView extends ImageView {
+    protected class ProgressAnimationImageView extends AppCompatImageView {
 
         /**
          * AnimationのStartとEnd時にListenerにアレする
@@ -401,17 +416,17 @@ public class WaveSwipeHeader extends InternalAbstract implements RefreshHeader {
             super.setImageDrawable(mProgress);
         }
 
-        public void setProgressColorSchemeColorsFromResource(@IdRes int... resources) {
-            final View thisView = this;
-            final Resources res = thisView.getResources();
-            final int[] colorRes = new int[resources.length];
-
-            for (int i = 0; i < resources.length; i++) {
-                colorRes[i] = res.getColor(resources[i]);
-            }
-
-            setColorSchemeColors(colorRes);
-        }
+//        public void setProgressColorSchemeColorsFromResource(@IdRes int... resources) {
+//            final View thisView = this;
+//            final Resources res = thisView.getResources();
+//            final int[] colorRes = new int[resources.length];
+//
+//            for (int i = 0; i < resources.length; i++) {
+//                colorRes[i] = res.getColor(resources[i]);
+//            }
+//
+//            setColorSchemeColors(colorRes);
+//        }
 
     }
     //</editor-fold>

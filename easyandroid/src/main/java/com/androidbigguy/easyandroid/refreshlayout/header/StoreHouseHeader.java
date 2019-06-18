@@ -22,7 +22,7 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshHeader;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshKernel;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.internal.InternalAbstract;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +38,11 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     //<editor-fold desc="Field">
     public List<StoreHouseBarItem> mItemList = new ArrayList<>();
 
-    protected int mLineWidth = -1;
     protected float mScale = 1;
+    protected int mLineWidth = -1;
     protected int mDropHeight = -1;
-    protected static final float mInternalAnimationFactor = 0.7f;
     protected int mHorizontalRandomness = -1;
+    protected static final float mInternalAnimationFactor = 0.7f;
 
     protected float mProgress = 0;
 
@@ -80,9 +80,8 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
     public StoreHouseHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        DensityUtil density = new DensityUtil();
-        mLineWidth = density.dip2px(1);
-        mDropHeight = density.dip2px(40);
+        mLineWidth = SmartUtil.dp2px(1);
+        mDropHeight = SmartUtil.dp2px(40);
         mHorizontalRandomness = Resources.getSystem().getDisplayMetrics().widthPixels / 2;
         mBackgroundColor = 0xff333333;
         setTextColor(0xffcccccc);
@@ -99,7 +98,7 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         ta.recycle();
 
         final View thisView = this;
-        thisView.setMinimumHeight(mDrawZoneHeight + DensityUtil.dp2px(40));
+        thisView.setMinimumHeight(mDrawZoneHeight + SmartUtil.dp2px(40));
     }
 
     @Override
@@ -245,11 +244,10 @@ public class StoreHouseHeader extends InternalAbstract implements RefreshHeader 
         float drawHeight = 0;
         boolean shouldLayout = mItemList.size() > 0;
         mItemList.clear();
-        DensityUtil density = new DensityUtil();
         for (int i = 0; i < pointList.size(); i++) {
             float[] line = pointList.get(i);
-            PointF startPoint = new PointF(density.dip2px(line[0]) * mScale, density.dip2px(line[1]) * mScale);
-            PointF endPoint = new PointF(density.dip2px(line[2]) * mScale, density.dip2px(line[3]) * mScale);
+            PointF startPoint = new PointF(SmartUtil.dp2px(line[0]) * mScale, SmartUtil.dp2px(line[1]) * mScale);
+            PointF endPoint = new PointF(SmartUtil.dp2px(line[2]) * mScale, SmartUtil.dp2px(line[3]) * mScale);
 
             drawWidth = Math.max(drawWidth, startPoint.x);
             drawWidth = Math.max(drawWidth, endPoint.x);

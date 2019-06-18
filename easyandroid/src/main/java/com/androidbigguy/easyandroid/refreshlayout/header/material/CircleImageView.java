@@ -26,8 +26,9 @@ import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
-import android.widget.ImageView;
+
 
 /**
  * Private class created to work around issues with AnimationListeners being
@@ -35,7 +36,7 @@ import android.widget.ImageView;
  * platforms.
  */
 @SuppressLint("ViewConstructor")
-public class CircleImageView extends ImageView {
+public class CircleImageView extends AppCompatImageView {
 
     protected static final int KEY_SHADOW_COLOR = 0x1E000000;
     protected static final int FILL_SHADOW_COLOR = 0x3D000000;
@@ -75,7 +76,6 @@ public class CircleImageView extends ImageView {
         if (Build.VERSION.SDK_INT >= 16) {
             thisView.setBackground(circle);
         } else {
-            //noinspection deprecation
             thisView.setBackgroundDrawable(circle);
         }
     }
@@ -156,12 +156,12 @@ public class CircleImageView extends ImageView {
             final View thisView = CircleImageView.this;
             final int viewWidth = thisView.getWidth();
             final int viewHeight = thisView.getHeight();
-            canvas.drawCircle(viewWidth / 2, viewHeight / 2, viewWidth / 2, mShadowPaint);
-            canvas.drawCircle(viewWidth / 2, viewHeight / 2, viewWidth / 2 - mShadowRadius, paint);
+            canvas.drawCircle(viewWidth / 2f, viewHeight / 2f, viewWidth / 2f, mShadowPaint);
+            canvas.drawCircle(viewWidth / 2f, viewHeight / 2f, viewWidth / 2f - mShadowRadius, paint);
         }
 
         private void updateRadialGradient(int diameter) {
-            mRadialGradient = new RadialGradient(diameter / 2, diameter / 2,
+            mRadialGradient = new RadialGradient(diameter / 2f, diameter / 2f,
                     mShadowRadius, new int[] { FILL_SHADOW_COLOR, Color.TRANSPARENT },
                     null, Shader.TileMode.CLAMP);
             mShadowPaint.setShader(mRadialGradient);

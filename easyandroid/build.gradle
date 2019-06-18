@@ -43,5 +43,5 @@ dependencies {
     //versionchecklib
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
-    compileOnly files('libs/gson-2.3.1.jar')
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

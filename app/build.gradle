@@ -23,6 +23,7 @@ dependencies {
     configurations {
         all*.exclude group: 'com.google.code.gson'
     }
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:design:27.1.1'

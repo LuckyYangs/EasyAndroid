@@ -12,24 +12,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
-import com.androidbigguy.easyandroid.refreshlayout.layout.listener.OnLoadMoreListener;
-import com.google.gson.Gson;
-import com.androidbigguy.easyandroiddemo.R;
-import com.androidbigguy.easyandroiddemo.banner.GlideImageLoader;
-import com.androidbigguy.easyandroiddemo.main.MainActivity;
-import com.androidbigguy.easyandroiddemo.vlayout.Common;
-import com.androidbigguy.easyandroiddemo.vlayout.IconEntity;
 import com.androidbigguy.easyandroid.banner.Banner;
 import com.androidbigguy.easyandroid.banner.listener.OnBannerListener;
+import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
 import com.androidbigguy.easyandroid.logger.Logger;
 import com.androidbigguy.easyandroid.refreshlayout.layout.EasyRefreshLayout;
+import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
+import com.androidbigguy.easyandroid.refreshlayout.layout.listener.OnLoadMoreListener;
 import com.androidbigguy.easyandroid.refreshlayout.layout.listener.OnRefreshListener;
 import com.androidbigguy.easyandroid.skeletonscrenn.Skeleton;
 import com.androidbigguy.easyandroid.skeletonscrenn.SkeletonScreen;
 import com.androidbigguy.easyandroid.utils.ActivityUtil;
 import com.androidbigguy.easyandroid.utils.ToastUtil;
-
+import com.androidbigguy.easyandroiddemo.R;
+import com.androidbigguy.easyandroiddemo.banner.GlideImageLoader;
+import com.androidbigguy.easyandroiddemo.main.MainActivity;
+import com.androidbigguy.easyandroiddemo.vlayout.Common;
+import com.androidbigguy.easyandroiddemo.vlayout.IconEntity;
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.IOException;

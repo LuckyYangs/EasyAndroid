@@ -6,8 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -23,7 +25,7 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.RefreshState;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.SpinnerStyle;
 import com.androidbigguy.easyandroid.refreshlayout.layout.internal.InternalAbstract;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
 
 import static android.view.View.MeasureSpec.getSize;
 
@@ -76,7 +78,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         mSpinnerStyle = SpinnerStyle.MatchLayout;
         final View thisView = this;
         final ViewGroup thisGroup = this;
-        thisView.setMinimumHeight(DensityUtil.dp2px(100));
+        thisView.setMinimumHeight(SmartUtil.dp2px(100));
 
         mProgress = new MaterialProgressDrawable(this);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
@@ -84,6 +86,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
         mProgress.setColorSchemeColors(0xff0099cc,0xffff4444,0xff669900,0xffaa66cc,0xffff8800);
         mCircleView = new CircleImageView(context,CIRCLE_BG_LIGHT);
         mCircleView.setImageDrawable(mProgress);
+        mCircleView.setAlpha(0f);
         thisGroup.addView(mCircleView);
 
         final DisplayMetrics metrics = thisView.getResources().getDisplayMetrics();
@@ -140,8 +143,8 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             circleView.setAlpha(1f);
             circleView.setVisibility(VISIBLE);
         } else {
-            circleView.layout((width / 2 - circleWidth / 2), -mCircleDiameter,
-                    (width / 2 + circleWidth / 2), circleHeight - mCircleDiameter);
+            circleView.layout((width / 2 - circleWidth / 2), -circleHeight,
+                    (width / 2 + circleWidth / 2), 0);
         }
     }
 
@@ -153,7 +156,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             mBezierPath.lineTo(0, mHeadHeight);
             //绘制贝塞尔曲线
             final View thisView = this;
-            mBezierPath.quadTo(thisView.getMeasuredWidth() / 2, mHeadHeight + mWaveHeight * 1.9f, thisView.getMeasuredWidth(), mHeadHeight);
+            mBezierPath.quadTo(thisView.getMeasuredWidth() / 2f, mHeadHeight + mWaveHeight * 1.9f, thisView.getMeasuredWidth(), mHeadHeight);
             mBezierPath.lineTo(thisView.getMeasuredWidth(), 0);
             canvas.drawPath(mBezierPath, mBezierPaint);
         }
@@ -187,7 +190,6 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
         if (isDragging || (!mProgress.isRunning() && !mFinished)) {
 
-            final View circleView = mCircleView;
             if (mState != RefreshState.Refreshing) {
                 float originalDragPercent = 1f * offset / height;
 
@@ -205,11 +207,12 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
 
                 float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
                 mProgress.setProgressRotation(rotation);
-                circleView.setAlpha(Math.min(1f, originalDragPercent * 2));
             }
 
-            float targetY = offset / 2 + mCircleDiameter / 2;
-            circleView.setTranslationY(Math.min(offset, targetY));//setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop, true /* requires update */);
+            final View circleView = mCircleView;
+            float targetY = offset / 2f + mCircleDiameter / 2f;
+            circleView.setTranslationY(Math.min(offset, targetY));
+            circleView.setAlpha(Math.min(1f, 4f * offset / mCircleDiameter));
         }
     }
 
@@ -261,10 +264,10 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
         mProgress.start();
-        final View circleView = mCircleView;
-        if ((int) circleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
-            circleView.animate().translationY(height / 2 + mCircleDiameter / 2);
-        }
+//        final View circleView = mCircleView;
+//        if ((int) circleView.getTranslationY() != height / 2 + mCircleDiameter / 2) {
+//            circleView.animate().translationY(height / 2 + mCircleDiameter / 2);
+//        }
     }
 
     @Override
@@ -277,6 +280,7 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
             case PullDownToRefresh:
                 mFinished = false;
                 circleView.setVisibility(VISIBLE);
+                circleView.setTranslationY(0);
                 circleView.setScaleX(1);
                 circleView.setScaleY(1);
                 break;
@@ -322,9 +326,24 @@ public class MaterialHeader extends InternalAbstract implements RefreshHeader {
      * @param colors ColorScheme
      * @return MaterialHeader
      */
-    public MaterialHeader setColorSchemeColors(int... colors) {
+    public MaterialHeader setColorSchemeColors(@ColorInt int... colors) {
         mProgress.setColorSchemeColors(colors);
         return this;
+    }
+
+    /**
+     * 设置 ColorScheme
+     * @param colorIds ColorSchemeResources
+     * @return MaterialHeader
+     */
+    public MaterialHeader setColorSchemeResources(@ColorRes int... colorIds) {
+        final View thisView = this;
+        final Context context = thisView.getContext();
+        int[] colors = new int[colorIds.length];
+        for (int i = 0; i < colorIds.length; i++) {
+            colors[i] = ContextCompat.getColor(context, colorIds[i]);
+        }
+        return setColorSchemeColors(colors);
     }
 
     /**

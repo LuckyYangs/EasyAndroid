@@ -7,6 +7,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.androidbigguy.easyandroid.R;
+import com.androidbigguy.easyandroid.baseadapter.BaseItemDraggableAdapter;
+import com.androidbigguy.easyandroid.baseadapter.BaseQuickAdapter;
 
 /**
  * Created by luoxw on 2016/6/20.

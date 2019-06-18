@@ -9,14 +9,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import com.androidbigguy.easyandroid.R;
@@ -25,9 +24,7 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.RefreshState;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.SpinnerStyle;
 import com.androidbigguy.easyandroid.refreshlayout.layout.internal.InternalAbstract;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
-
-import static com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil.getColor;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
 
 
 /**
@@ -81,18 +78,17 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mSpinnerStyle = SpinnerStyle.Scale;
 
         final View thisView = this;
-        final DensityUtil density = new DensityUtil();
 
         mPath = new Path();
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
 
-        mDotRadius = density.dip2px(7);
-        mRadarRadius = density.dip2px(20);
-        mRadarCircle = density.dip2px(7);
-        mPaint.setStrokeWidth(density.dip2px(3));
+        mDotRadius = SmartUtil.dp2px(7);
+        mRadarRadius = SmartUtil.dp2px(20);
+        mRadarCircle = SmartUtil.dp2px(7);
+        mPaint.setStrokeWidth(SmartUtil.dp2px(3));
 
-        thisView.setMinimumHeight(density.dip2px(100));
+        thisView.setMinimumHeight(SmartUtil.dp2px(100));
 
         if (thisView.isInEditMode()) {
             mWaveTop = 1000;
@@ -150,7 +146,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mPath.reset();
         //绘制贝塞尔曲线
         mPath.lineTo(0, mWaveTop);
-        mPath.quadTo(mWaveOffsetX >= 0 ? (mWaveOffsetX) : width / 2, mWaveTop + mWaveHeight, width, mWaveTop);
+        mPath.quadTo(mWaveOffsetX >= 0 ? (mWaveOffsetX) : width / 2f, mWaveTop + mWaveHeight, width, mWaveTop);
         mPath.lineTo(width, 0);
         mPaint.setColor(mPrimaryColor);
         canvas.drawPath(mPath, mPaint);
@@ -160,15 +156,15 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         if (mDotAlpha > 0) {
             mPaint.setColor(mAccentColor);
             final int num = 7;
-            float x = DensityUtil.px2dp(height);
-            float wide = (width / num) * mDotFraction -((mDotFraction >1)?((mDotFraction -1)*(width / num)/ mDotFraction):0);//y1 = t*(w/n)-(t>1)*((t-1)*(w/n)/t)
+            float x = SmartUtil.px2dp(height);
+            float wide = (1f * width / num) * mDotFraction -((mDotFraction >1)?((mDotFraction -1)*(1f * width / num)/ mDotFraction):0);//y1 = t*(w/n)-(t>1)*((t-1)*(w/n)/t)
             float high = height - ((mDotFraction >1)?((mDotFraction -1)*height/2/ mDotFraction):0);//y2 = x - (t>1)*((t-1)*x/t);
             for (int i = 0 ; i < num; i++) {
                 float index = 1f + i - (1f + num) / 2;//y3 = (x + 1) - (n + 1)/2; 居中 index 变量：0 1 2 3 4 结果： -2 -1 0 1 2
                 float alpha = 255 * (1 - (2 * (Math.abs(index) / num)));//y4 = m * ( 1 - 2 * abs(y3) / n); 横向 alpha 差
                 mPaint.setAlpha((int) (mDotAlpha * alpha * (1d - 1d / Math.pow((x / 800d + 1d), 15))));//y5 = y4 * (1-1/((x/800+1)^15));竖直 alpha 差
                 float radius = mDotRadius * (1-1/((x/10+1)));//y6 = mDotRadius*(1-1/(x/10+1));半径
-                canvas.drawCircle(width / 2- radius/2 + wide * index , high / 2, radius, mPaint);
+                canvas.drawCircle(width / 2f- radius/2 + wide * index , high / 2, radius, mPaint);
             }
             mPaint.setAlpha(255);
         }
@@ -182,19 +178,19 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
             mPaint.setColor(mAccentColor);
             mPaint.setStyle(Paint.Style.FILL);
-            canvas.drawCircle(width / 2, height / 2, radius, mPaint);
+            canvas.drawCircle(width / 2f, height / 2f, radius, mPaint);
 
             mPaint.setStyle(Paint.Style.STROKE);//设置为空心
-            canvas.drawCircle(width / 2, height / 2, radius + circle, mPaint);
+            canvas.drawCircle(width / 2f, height / 2f, radius + circle, mPaint);
 
             mPaint.setColor(mPrimaryColor & 0x00ffffff | 0x55000000);
             mPaint.setStyle(Paint.Style.FILL);
-            mRadarRect.set(width / 2 - radius, height / 2 - radius, width / 2 + radius, height / 2 + radius);
+            mRadarRect.set(width / 2f - radius, height / 2f - radius, width / 2f + radius, height / 2f + radius);
             canvas.drawArc(mRadarRect, 270, mRadarAngle, true, mPaint);
 
             radius += circle;
             mPaint.setStyle(Paint.Style.STROKE);
-            mRadarRect.set(width / 2 - radius, height / 2 - radius, width / 2 + radius, height / 2 + radius);
+            mRadarRect.set(width / 2f - radius, height / 2f - radius, width / 2f + radius, height / 2f + radius);
             canvas.drawArc(mRadarRect, 270, mRadarAngle, false, mPaint);
 
             mPaint.setStyle(Paint.Style.FILL);
@@ -205,7 +201,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     protected void drawRipple(Canvas canvas, int width, int height) {
         if (mRippleRadius > 0) {
             mPaint.setColor(mAccentColor);
-            canvas.drawCircle(width / 2, height / 2, mRippleRadius, mPaint);
+            canvas.drawCircle(width / 2f, height / 2f, mRippleRadius, mPaint);
         }
     }
     //</editor-fold>
@@ -243,13 +239,7 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         mWaveTop = height;
         mWavePulling = false;
 
-        ValueAnimator mRadarAnimator = ValueAnimator.ofInt(0,360);
-        mRadarAnimator.setDuration(720);
-        mRadarAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        mRadarAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        mRadarAnimator.addUpdateListener(new AnimatorUpdater(PROPERTY_RADAR_ANGLE));
-
-        Interpolator interpolatorDecelerate = new DecelerateInterpolator();
+        Interpolator interpolatorDecelerate = new SmartUtil();//new DecelerateInterpolator();
         //圆点消失动画
         ValueAnimator animatorDotAlpha = ValueAnimator.ofFloat(1, 0);
         animatorDotAlpha.setInterpolator(interpolatorDecelerate);
@@ -258,6 +248,12 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
         ValueAnimator animatorRadarScale = ValueAnimator.ofFloat(0, 1);
         animatorDotAlpha.setInterpolator(interpolatorDecelerate);
         animatorRadarScale.addUpdateListener(new AnimatorUpdater(PROPERTY_RADAR_SCALE));
+        //雷达选装
+        ValueAnimator mRadarAnimator = ValueAnimator.ofInt(0,360);
+        mRadarAnimator.setDuration(720);
+        mRadarAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mRadarAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mRadarAnimator.addUpdateListener(new AnimatorUpdater(PROPERTY_RADAR_ANGLE));
         //连续动画集
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playSequentially(animatorDotAlpha, animatorRadarScale, mRadarAnimator);
@@ -338,11 +334,11 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
     public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
         mWaveOffsetX = offsetX;
         final View thisView = this;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            thisView.postInvalidateOnAnimation();
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//            thisView.postInvalidateOnAnimation();
+//        } else {
             thisView.invalidate();
-        }
+//        }
     }
     //</editor-fold>
 
@@ -361,13 +357,13 @@ public class BezierRadarHeader extends InternalAbstract implements RefreshHeader
 
     public BezierRadarHeader setPrimaryColorId(@ColorRes int colorId) {
         final View thisView = this;
-        setPrimaryColor(getColor(thisView.getContext(), colorId));
+        setPrimaryColor(ContextCompat.getColor(thisView.getContext(), colorId));
         return this;
     }
 
     public BezierRadarHeader setAccentColorId(@ColorRes int colorId) {
         final View thisView = this;
-        setAccentColor(getColor(thisView.getContext(), colorId));
+        setAccentColor(ContextCompat.getColor(thisView.getContext(), colorId));
         return this;
     }
 

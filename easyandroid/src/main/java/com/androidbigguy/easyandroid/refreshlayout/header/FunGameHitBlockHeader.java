@@ -13,7 +13,7 @@ import android.view.View;
 import com.androidbigguy.easyandroid.R;
 import com.androidbigguy.easyandroid.refreshlayout.header.fungame.FunGameView;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshKernel;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,20 +106,20 @@ public class FunGameHitBlockHeader extends FunGameView {
         super(context, attrs, defStyle);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FunGameHitBlockHeader);
-        speed = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBallSpeed, DensityUtil.dp2px(SPEED));
+        speed = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBallSpeed, SmartUtil.dp2px(SPEED));
         blockHorizontalNum = ta.getInt(R.styleable.FunGameHitBlockHeader_fghBlockHorizontalNum, BLOCK_HORIZONTAL_NUM);
         ta.recycle();
 
         blockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         blockPaint.setStyle(Paint.Style.FILL);
-        BALL_RADIUS = DensityUtil.dp2px(4);
+        BALL_RADIUS = SmartUtil.dp2px(4);
     }
 
     @Override
     public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
         final View thisView = this;
         final int measuredWidth = thisView.getMeasuredWidth();
-        blockHeight = height / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
+        blockHeight = 1f * height / BLOCK_VERTICAL_NUM - DIVIDING_LINE_SIZE;
         blockWidth = measuredWidth * BLOCK_WIDTH_RATIO;
 
         blockLeft = measuredWidth * BLOCK_POSITION_RATIO;
@@ -131,7 +131,6 @@ public class FunGameHitBlockHeader extends FunGameView {
     //</editor-fold>
 
     //<editor-fold desc="游戏控制">
-    @Override
     protected void resetConfigParams() {
         cx = racketLeft - 3 * BALL_RADIUS;
         cy = (int) (mHeaderHeight * .5f);
