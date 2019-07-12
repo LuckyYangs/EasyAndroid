@@ -1,5 +1,6 @@
 package com.androidbigguy.easyandroid.refreshlayout.layout.listener;
 
+
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshFooter;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshHeader;
 

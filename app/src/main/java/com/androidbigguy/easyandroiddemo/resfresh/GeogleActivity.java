@@ -8,14 +8,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.androidbigguy.easyandroiddemo.BaseActivity;
-import com.androidbigguy.easyandroiddemo.R;
 import com.androidbigguy.easyandroid.refreshlayout.layout.EasyRefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
-import com.androidbigguy.easyandroid.refreshlayout.layout.listener.OnLoadMoreListener;
 import com.androidbigguy.easyandroid.refreshlayout.layout.listener.OnRefreshListener;
 import com.androidbigguy.easyandroid.utils.ActivityUtil;
 import com.androidbigguy.easyandroid.utils.ToastUtil;
+import com.androidbigguy.easyandroiddemo.BaseActivity;
+import com.androidbigguy.easyandroiddemo.R;
 
 import java.util.ArrayList;
 
@@ -54,19 +53,19 @@ public class GeogleActivity extends BaseActivity {
                 ToastUtil.show(getApplicationContext(),"你点击了第"+position+"条数据");
             }
         });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if(data.size()<20) {
-                    adddata();
-                    adapter.notifyDataSetChanged();
-                    refreshLayout.finishLoadMore();
-                }else {
-                    refreshLayout.finishLoadMore();
-                    refreshLayout.setNoMoreData(true);
-                }
-            }
-        });
+//        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+//                if(data.size()<20) {
+//                    adddata();
+//                    adapter.notifyDataSetChanged();
+//                    refreshLayout.finishLoadMore();
+//                }else {
+//                    refreshLayout.finishLoadMore();
+//                    refreshLayout.setNoMoreData(true);
+//                }
+//            }
+//        });
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -99,7 +98,7 @@ public class GeogleActivity extends BaseActivity {
     }
     private  void intdata() {
         data.clear();
-        for (int i=0;i<10;i++){
+        for (int i=0;i<0;i++){
             data.add("第"+i+"条数据");
         }
     }

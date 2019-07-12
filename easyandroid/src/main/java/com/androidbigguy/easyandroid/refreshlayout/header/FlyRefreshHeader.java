@@ -20,7 +20,7 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshHeader;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshKernel;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.header.FalsifyHeader;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
 
 
 /**
@@ -86,6 +86,37 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         }
     }
 
+//    @Override
+//    public void onReleasing(float percent, int offset, int height, int maxDragHeight) {
+//        if (!mIsRefreshing) {
+//            onPulling(percent, offset, height, maxDragHeight);
+//        }
+//    }
+//
+//    @Override
+//    public void onPulling(float percent, int offset, int height, int maxDragHeight) {
+//        if (offset < 0) {
+//            if (mOffset > 0) {
+//                offset = 0;
+//                percent = 0;
+//            } else {
+//                return;
+//            }
+//        }
+//        mOffset = offset;
+//        mCurrentPercent = percent;
+//        if (mSceneView != null) {
+//            mSceneView.updatePercent(percent);
+//            mSceneView.postInvalidate();
+//        }
+//        if (mFlyView != null) {
+//            if (height + maxDragHeight > 0) {
+//                mFlyView.setRotation((-45f) * offset / (height + maxDragHeight));
+//            } else {
+//                mFlyView.setRotation((-45f) * percent);
+//            }
+//        }
+//    }
 
     @Override
     public void onReleased(@NonNull RefreshLayout layout, int height, int maxDragHeight) {
@@ -101,7 +132,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     onMoving(true,(float) animation.getAnimatedValue(), 0, 0, 0);
-                    //                    onPulling((float) animation.getAnimatedValue(), 0, 0, 0);
+//                    onPulling((float) animation.getAnimatedValue(), 0, 0, 0);
                 }
             });
             valueAnimator.start();
@@ -173,7 +204,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
 
     //<editor-fold desc="API">
 
-    public void setUp(@Nullable MountainSceneView sceneView,@Nullable View flyView) {
+    public void setUp(@Nullable MountainSceneView sceneView, @Nullable View flyView) {
         mFlyView = flyView;
         mSceneView = sceneView;
     }
@@ -195,7 +226,7 @@ public class FlyRefreshHeader extends FalsifyHeader implements RefreshHeader {
         mRefreshLayout.finishRefresh(0);
 
         final int offDistX = -mFlyView.getRight();
-        final int offDistY = -SmartUtil.dp2px(10);
+        final int offDistY = -DensityUtil.dp2px(10);
         AnimatorSet flyDownAnim = new AnimatorSet();
         flyDownAnim.setDuration(800);
         ObjectAnimator transX1 = ObjectAnimator.ofFloat(mFlyView, "translationX", mFlyView.getTranslationX(), offDistX);

@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.androidbigguy.easyandroid.refreshlayout.header.fungame.FunGameView;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshKernel;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -149,13 +149,13 @@ public class FunGameBattleCityHeader extends FunGameView {
     //</editor-fold>
 
     //<editor-fold desc="游戏控制">
-
+@Override
     protected void resetConfigParams() {
         status = FunGameView.STATUS_GAME_PREPARE;
         controllerPosition = DIVIDING_LINE_SIZE;
 
-        enemySpeed = SmartUtil.dp2px(1);
-        bulletSpeed = SmartUtil.dp2px(4);
+        enemySpeed = DensityUtil.dp2px(1);
+        bulletSpeed = DensityUtil.dp2px(4);
 
         levelNum = DEFAULT_TANK_MAGIC_TOTAL_NUM;
         wipeOutNum = 0;
@@ -221,15 +221,15 @@ public class FunGameBattleCityHeader extends FunGameView {
      */
     protected void upLevel() {
         levelNum += DEFAULT_TANK_MAGIC_TOTAL_NUM;
-        enemySpeed += SmartUtil.dp2px(1);
-        bulletSpeed += SmartUtil.dp2px(1);
+        enemySpeed += DensityUtil.dp2px(1);
+        bulletSpeed += DensityUtil.dp2px(1);
         wipeOutNum = 0;
 
-        if (enemyTankSpace > 12)
-        enemyTankSpace -= 12;
-
-        if (bulletSpace > 30)
-        bulletSpace -= 30;
+        if (enemyTankSpace > 12) {
+            enemyTankSpace -= 12;
+        }
+        if (bulletSpace > 30){
+        bulletSpace -= 30;}
     }
 
     /**
@@ -385,7 +385,7 @@ public class FunGameBattleCityHeader extends FunGameView {
                 drawTank(canvas, rectF);
             }
 
-            if (status == STATUS_GAME_OVER) break;
+            if (status == STATUS_GAME_OVER){ break;}
             if (isOverstep) {
                 rectFQueue.poll();
                 isOverstep = false;

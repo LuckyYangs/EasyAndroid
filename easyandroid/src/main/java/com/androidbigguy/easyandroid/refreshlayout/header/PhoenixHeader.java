@@ -22,7 +22,7 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshHeader;
 import com.androidbigguy.easyandroid.refreshlayout.layout.api.RefreshLayout;
 import com.androidbigguy.easyandroid.refreshlayout.layout.constant.SpinnerStyle;
 import com.androidbigguy.easyandroid.refreshlayout.layout.internal.InternalAbstract;
-import com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil;
+import com.androidbigguy.easyandroid.refreshlayout.layout.util.DensityUtil;
 
 
 /**
@@ -122,9 +122,10 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         super(context, attrs, defStyleAttr);
 
         mMatrix = new Matrix();
-        mSunSize = SmartUtil.dp2px(40);
+        DensityUtil density = new DensityUtil();
+        mSunSize = density.dip2px(40);
         final View thisView = this;
-        thisView.setMinimumHeight(SmartUtil.dp2px(100));
+        thisView.setMinimumHeight(density.dip2px(100));
 
         mSpinnerStyle = SpinnerStyle.Scale;
 
@@ -147,31 +148,22 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         //<editor-fold desc="setupPathsDrawable">
         int widthPixels = Resources.getSystem().getDisplayMetrics().widthPixels;
         PathsDrawable townDrawable = new PathsDrawable();
+        townDrawable.parserPaths(townPaths);
         townDrawable.parserColors(townColors);
-        if (!townDrawable.parserPaths(townPaths)) {
-            townDrawable.declareOriginal(1, 0, 1870, 416);
-        }
-//        townDrawable.printOriginal("townDrawable");
         mDrawableTown = townDrawable;
         Rect bounds = mDrawableTown.getBounds();
         mDrawableTown.setBounds(0, 0, widthPixels, widthPixels * bounds.height() / bounds.width());
 
         PathsDrawable skyDrawable = new PathsDrawable();
+        skyDrawable.parserPaths(skyPaths);
         skyDrawable.parserColors(skyColors);
-        if (!skyDrawable.parserPaths(skyPaths)) {
-            skyDrawable.declareOriginal(0, 0, 1600, 1040);
-        }
-//        skyDrawable.printOriginal("skyDrawable");
         mDrawableSky = skyDrawable;
         bounds = mDrawableSky.getBounds();
         mDrawableSky.setBounds(0, 0, widthPixels, widthPixels * bounds.height() / bounds.width());
 
         PathsDrawable sunDrawable = new PathsDrawable();
+        sunDrawable.parserPaths(sunPaths);
         sunDrawable.parserColors(sunColors);
-        if (!sunDrawable.parserPaths(sunPaths)) {
-            sunDrawable.declareOriginal(0, 0, 228, 228);
-        }
-//        sunDrawable.printOriginal("sunDrawable");
         mDrawableSun = sunDrawable;
         mDrawableSun.setBounds(0, 0, mSunSize, mSunSize);
 
@@ -291,7 +283,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         int bHeight = mDrawableSky.getBounds().height();//mSky.getHeight();
         float townScale = 1f * width / bWidth;
         float offsetX = 0;
-        float offsetY = height / 2f - bHeight / 2f;
+        float offsetY = height / 2 - bHeight / 2;
 
 //        matrix.postScale(townScale, townScale);
 //        matrix.postTranslate(offsetX, offsetY);
@@ -314,7 +306,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
         int bHeight = mDrawableTown.getBounds().height();//mTown.getHeight();
         float townScale = 1f * width / bWidth;
         float amplification = (0.3f * Math.max(mPercent - 1, 0) + 1);
-        float offsetX = width / 2f - (int) (width * amplification) / 2f;
+        float offsetX = width / 2 - (int) (width * amplification) / 2;
         float offsetY = mHeaderHeight * 0.1f * mPercent;
         townScale = amplification * townScale;
 
@@ -344,7 +336,7 @@ public class PhoenixHeader extends InternalAbstract implements RefreshHeader/*, 
 
         float sunRadius = (float) mSunSize / 2.0f;
         float offsetX = mSunLeftOffset + sunRadius;
-        float offsetY = mSunTopOffset + (mHeaderHeight / 2f) * (1.0f - Math.min(mPercent, 1)); // Move the sun up
+        float offsetY = mSunTopOffset + (mHeaderHeight / 2) * (1.0f - Math.min(mPercent, 1)); // Move the sun up
 
         int bWidth = mDrawableSun.getBounds().width();
         float sunScale = 1f * mSunSize / bWidth;

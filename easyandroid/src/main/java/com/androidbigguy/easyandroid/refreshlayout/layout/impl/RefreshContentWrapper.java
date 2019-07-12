@@ -21,14 +21,15 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.api.ScrollBoundaryDeci
 import com.androidbigguy.easyandroid.refreshlayout.layout.listener.CoordinatorLayoutListener;
 import com.androidbigguy.easyandroid.refreshlayout.layout.util.DesignUtil;
 
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil.canScrollVertically;
-import static com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil.isContentView;
-import static com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil.isTransformedTouchPointInView;
+import static com.androidbigguy.easyandroid.refreshlayout.layout.util.ScrollBoundaryUtil.canScrollDown;
+import static com.androidbigguy.easyandroid.refreshlayout.layout.util.ScrollBoundaryUtil.canScrollUp;
+import static com.androidbigguy.easyandroid.refreshlayout.layout.util.ScrollBoundaryUtil.isTransformedTouchPointInView;
+import static com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil.isScrollableView;
 import static com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil.measureViewHeight;
 import static com.androidbigguy.easyandroid.refreshlayout.layout.util.SmartUtil.scrollListBy;
 
@@ -43,7 +44,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
 //    protected int mHeaderHeight = Integer.MAX_VALUE;
 //    protected int mFooterHeight = mHeaderHeight - 1;
     protected View mContentView;//直接内容视图
-    protected View mOriginalContentView;//被包裹的原真实视图
+    protected View mRealContentView;//被包裹的原真实视图
     protected View mScrollableView;
     protected View mFixedHeader;
     protected View mFixedFooter;
@@ -54,7 +55,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
     protected ScrollBoundaryDeciderAdapter mBoundaryAdapter = new ScrollBoundaryDeciderAdapter();
 
     public RefreshContentWrapper(@NonNull View view) {
-        this.mContentView = mOriginalContentView = mScrollableView = view;
+        this.mContentView = mRealContentView = mScrollableView = view;
     }
 
     //<editor-fold desc="findScrollableView">
@@ -83,21 +84,18 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
         mEnableLoadMore = enableLoadMore;
     }
 
-    protected View findScrollableViewInternal(View content, boolean selfAble) {
+    protected View findScrollableViewInternal(View content, boolean selfable) {
         View scrollableView = null;
-        Queue<View> views = new LinkedList<>();
-        //noinspection unchecked
-        List<View> list = (List<View>)views;
-        list.add(content);
-        while (list.size() > 0 && scrollableView == null) {
+        Queue<View> views = new LinkedList<>(Collections.singletonList(content));
+        while (!views.isEmpty() && scrollableView == null) {
             View view = views.poll();
             if (view != null) {
-                if ((selfAble || view != content) && isContentView(view)) {
+                if ((selfable || view != content) && isScrollableView(view)) {
                     scrollableView = view;
                 } else if (view instanceof ViewGroup) {
                     ViewGroup group = (ViewGroup) view;
                     for (int j = 0; j < group.getChildCount(); j++) {
-                        list.add(group.getChildAt(j));
+                        views.add(group.getChildAt(j));
                     }
                 }
             }
@@ -113,7 +111,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
             for (int i = childCount; i > 0; i--) {
                 View child = viewGroup.getChildAt(i - 1);
                 if (isTransformedTouchPointInView(viewGroup, child, event.x, event.y, point)) {
-                    if (child instanceof ViewPager || !isContentView(child)) {
+                    if (child instanceof ViewPager || !isScrollableView(child)) {
                         event.offset(point.x, point.y);
                         child = findScrollableViewByPoint(child, event, orgScrollableView);
                         event.offset(-point.x, -point.y);
@@ -127,7 +125,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
     //</editor-fold>
 
     //<editor-fold desc="implements">
-    @NonNull
+    @NonNull@Override
     public View getView() {
         return mContentView;
     }
@@ -139,35 +137,8 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
     }
 
     @Override
-    public void moveSpinner(int spinner, int headerTranslationViewId, int footerTranslationViewId) {
-        boolean translated = false;
-        if (headerTranslationViewId != View.NO_ID) {
-            View headerTranslationView = mOriginalContentView.findViewById(headerTranslationViewId);
-            if (headerTranslationView != null) {
-                if (spinner > 0) {
-                    translated = true;
-                    headerTranslationView.setTranslationY(spinner);
-                } else if (headerTranslationView.getTranslationY() > 0) {
-                    headerTranslationView.setTranslationY(0);
-                }
-            }
-        }
-        if (footerTranslationViewId != View.NO_ID) {
-            View footerTranslationView = mOriginalContentView.findViewById(footerTranslationViewId);
-            if (footerTranslationView != null) {
-                if (spinner < 0) {
-                    translated = true;
-                    footerTranslationView.setTranslationY(spinner);
-                } else if (footerTranslationView.getTranslationY() < 0) {
-                    footerTranslationView.setTranslationY(0);
-                }
-            }
-        }
-        if (!translated) {
-            mOriginalContentView.setTranslationY(spinner);
-        } else {
-            mOriginalContentView.setTranslationY(0);
-        }
+    public void moveSpinner(int spinner) {
+        mRealContentView.setTranslationY(spinner);
         if (mFixedHeader != null) {
             mFixedHeader.setTranslationY(Math.max(0, spinner));
         }
@@ -225,8 +196,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
             kernel.getRefreshLayout().getLayout().addView(frameLayout, layoutParams);
             mContentView = frameLayout;
             if (fixedHeader != null) {
-                fixedHeader.setTag("fixed-top");
-//                fixedHeader.setClickable(true);
+                fixedHeader.setClickable(true);
                 ViewGroup.LayoutParams lp = fixedHeader.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedHeader.getParent();
                 int index = parent.indexOfChild(fixedHeader);
@@ -236,8 +206,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
                 frameLayout.addView(fixedHeader);
             }
             if (fixedFooter != null) {
-                fixedFooter.setTag("fixed-bottom");
-//                fixedFooter.setClickable(true);
+                fixedFooter.setClickable(true);
                 ViewGroup.LayoutParams lp = fixedFooter.getLayoutParams();
                 ViewGroup parent = (ViewGroup) fixedFooter.getParent();
                 int index = parent.indexOfChild(fixedFooter);
@@ -275,7 +244,7 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
     @Override
     public AnimatorUpdateListener scrollContentWhenFinished(final int spinner) {
         if (mScrollableView != null && spinner != 0) {
-            if ((spinner < 0 && canScrollVertically(mScrollableView, 1)) || (spinner > 0 && canScrollVertically(mScrollableView, -1))) {
+            if ((spinner < 0 && canScrollDown(mScrollableView)) || (spinner > 0 && canScrollUp(mScrollableView))) {
                 mLastSpinner = spinner;
                 return this;
             }
@@ -287,15 +256,13 @@ public class RefreshContentWrapper implements RefreshContent, CoordinatorLayoutL
     public void onAnimationUpdate(ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
         try {
-            float dy = (value - mLastSpinner) * mScrollableView.getScaleY();
             if (mScrollableView instanceof AbsListView) {
-                scrollListBy((AbsListView) mScrollableView, (int)dy);
+                scrollListBy((AbsListView) mScrollableView, value - mLastSpinner);
             } else {
-                mScrollableView.scrollBy(0, (int)dy);
+                mScrollableView.scrollBy(0, value - mLastSpinner);
             }
-        } catch (Throwable e) {
+        } catch (Throwable ignored) {
             //根据用户反馈，此处可能会有BUG
-            e.printStackTrace();
         }
         mLastSpinner = value;
     }

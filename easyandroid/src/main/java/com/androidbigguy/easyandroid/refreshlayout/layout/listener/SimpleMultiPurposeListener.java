@@ -15,6 +15,11 @@ import com.androidbigguy.easyandroid.refreshlayout.layout.constant.RefreshState;
 
 public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
 
+//    @Override
+//    public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int maxDragHeight) {
+//
+//    }
+
     @Override
     public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
 
@@ -24,6 +29,11 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
     public void onHeaderReleased(RefreshHeader header, int headerHeight, int maxDragHeight) {
 
     }
+
+//    @Override
+//    public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int footerHeight, int maxDragHeight) {
+//
+//    }
 
     @Override
     public void onHeaderStartAnimator(RefreshHeader header, int footerHeight, int maxDragHeight) {
@@ -40,10 +50,20 @@ public class SimpleMultiPurposeListener implements OnMultiPurposeListener {
 
     }
 
+//    @Override
+//    public void onFooterPulling(RefreshFooter footer, float percent, int offset, int footerHeight, int maxDragHeight) {
+//
+//    }
+
     @Override
     public void onFooterReleased(RefreshFooter footer, int footerHeight, int maxDragHeight) {
 
     }
+
+//    @Override
+//    public void onFooterReleasing(RefreshFooter footer, float percent, int offset, int footerHeight, int maxDragHeight) {
+//
+//    }
 
     @Override
     public void onFooterStartAnimator(RefreshFooter footer, int headerHeight, int maxDragHeight) {

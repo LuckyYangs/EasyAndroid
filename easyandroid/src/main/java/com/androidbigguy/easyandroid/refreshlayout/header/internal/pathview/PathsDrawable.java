@@ -23,6 +23,8 @@ import java.util.List;
 public class PathsDrawable extends PaintDrawable {
 
 //    protected Paint mPaint;
+    protected List<Path> mPaths;
+    protected List<Integer> mColors;
     protected int mWidth = 1,mHeight = 1;
     protected int mStartX = 0,mStartY = 0;
     protected int mOriginWidth;
@@ -30,20 +32,12 @@ public class PathsDrawable extends PaintDrawable {
     protected static final Region REGION = new Region();
     protected static final Region MAX_CLIP = new Region(Integer.MIN_VALUE,
             Integer.MIN_VALUE,Integer.MAX_VALUE, Integer.MAX_VALUE);
+    protected List<Path> mOriginPaths;
+    protected List<String> mOriginSvgs;
 
-    protected List<Path> mPaths;
-    protected List<Integer> mColors;
-    protected List<Path> mltOriginPath;
-    protected List<String> mltOriginSvg;
 
-//    public PathsDrawable() {
-//        mPaint = new Paint();
-//        mPaint.setColor(0xff11bbff);
-//        mPaint.setStyle(Paint.Style.FILL);
-//        mPaint.setAntiAlias(true);
-//    }
 
-    protected boolean onMeasure() {
+    protected void onMeasure() {
         Integer top = null,left = null,right = null,bottom = null;
         if (mPaths != null) {
             for (Path path : mPaths) {
@@ -55,85 +49,49 @@ public class PathsDrawable extends PaintDrawable {
                 bottom = Math.max(bottom == null ? bounds.bottom : bottom, bounds.bottom);
             }
         }
-
         mStartX = left == null ? 0 : left;
         mStartY = top == null ? 0 : top;
         mWidth = right == null ? 0 : right - mStartX;
         mHeight = bottom == null ? 0 : bottom - mStartY;
-
         if (mOriginWidth == 0) {
             mOriginWidth = mWidth;
         }
         if (mOriginHeight == 0) {
             mOriginHeight = mHeight;
         }
-
         final Drawable drawable = PathsDrawable.this;
         final Rect bounds = drawable.getBounds();
-        if (mWidth == 0 || mHeight == 0) {//测量失败
-            if (mOriginWidth == 0) {
-                mOriginWidth = 1;
-            }
-            if (mOriginHeight == 0) {
-                mOriginHeight = 1;
-            }
-            mWidth = mHeight = 1;
-            return false;
-        } else {
-            super.setBounds(bounds.left, bounds.top, bounds.left + mWidth, bounds.top + mHeight);
-            return true;
-        }
+        super.setBounds(bounds.left, bounds.top, bounds.left + mWidth, bounds.top + mHeight);
     }
 
     @Override
     public void setBounds(int left, int top, int right, int bottom) {
         final int width = right - left;
         final int height = bottom - top;
-        if (mltOriginPath != null && mltOriginPath.size() > 0 && (width != mWidth || height != mHeight)) {
-            int ox = mStartX, oy = mStartY;
+        if (mOriginPaths != null && mOriginPaths.size() > 0 &&
+                (width != mWidth || height != mHeight)) {
             float ratioWidth = 1f * width / mOriginWidth;
             float ratioHeight = 1f * height / mOriginHeight;
-            mPaths = PathParser.transformScale(ratioWidth, ratioHeight, mltOriginPath, mltOriginSvg);
-            if (!onMeasure()) {
-                mWidth = width;
-                mHeight = height;
-                mStartX = (int) (1f * ox * width / mOriginWidth);
-                mStartY = (int) (1f * oy * height / mOriginHeight);
-                super.setBounds(left, top, right, bottom);
-            }
+            mPaths = PathParser.transformScale(ratioWidth, ratioHeight, mOriginPaths, mOriginSvgs);
+            onMeasure();
         } else {
             super.setBounds(left, top, right, bottom);
         }
     }
-
+    @Override
     public void setBounds(@NonNull Rect bounds) {
         setBounds(bounds.left, bounds.top, bounds.right, bounds.bottom);
     }
 
-    public boolean parserPaths(String... paths) {
+    public void parserPaths(String... paths) {
         mOriginWidth = mOriginHeight = 0;
-        mltOriginSvg = new ArrayList<>();
-        mPaths = mltOriginPath = new ArrayList<>();
+        mOriginSvgs = new ArrayList<>();
+        mPaths = mOriginPaths = new ArrayList<>();
         for (String path : paths) {
-            mltOriginSvg.add(path);
-            mltOriginPath.add(PathParser.createPathFromPathData(path));
+            mOriginSvgs.add(path);
+            mOriginPaths.add(PathParser.createPathFromPathData(path));
         }
-        return onMeasure();
-    }
-
-//    public void printOriginal(String name) {
-//        System.out.println(String.format("%s : %s", name, Arrays.toString(new int[]{mStartX, mStartY, mOriginWidth, mOriginHeight})));
-//        Log.e("printOriginal", String.format("%s : %s", name, Arrays.toString(new int[]{mStartX, mStartY, mOriginWidth, mOriginHeight})));
-//    }
-
-    public void declareOriginal(int startX, int startY, int width, int height) {
-        this.mStartX = startX;
-        this.mStartY = startY;
-        this.mOriginWidth = mWidth = width;
-        this.mOriginHeight = mHeight = height;
-        final Drawable drawable = PathsDrawable.this;
-        final Rect bounds = drawable.getBounds();
-        super.setBounds(bounds.left, bounds.top, bounds.left + width, bounds.top + height);
+        onMeasure();
     }
 
     public void parserColors(int... colors) {
