@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--bigimageview-->
+    <item name="sh_progress_view" type="id"/>
+    <item name="sh_progress_text" type="id"/>
+
     <!--appupdata-->
     <item name="versionchecklib_version_dialog_commit" type="id" />
     <item name="versionchecklib_failed_dialog_retry" type="id" />

@@ -46,6 +46,33 @@ public class DateUtil {
 
         return mYear + "-" + mMonth + "-" + mDay;
     }
+    public static int getYear() {
+
+        Calendar c = Calendar.getInstance();
+
+        return c.get(Calendar.YEAR) ;
+    }
+    public static String getmMonth() {
+
+        Calendar c = Calendar.getInstance();
+        if(c.get(Calendar.MONTH) + 1<10){
+            mMonth = "0"+String.valueOf(c.get(Calendar.MONTH) + 1);
+        }else {
+            mMonth = String.valueOf(c.get(Calendar.MONTH) + 1);
+        }
+        return mMonth;
+    }
+    public static String getmToday() {
+
+        Calendar c = Calendar.getInstance();
+        if(c.get(Calendar.DAY_OF_MONTH)<10){
+            mDay = "0"+String.valueOf(c.get(Calendar.DAY_OF_MONTH));
+        }else {
+            mDay = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
+        }
+
+        return mDay;
+    }
     public static String getWeek(){
         final Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));

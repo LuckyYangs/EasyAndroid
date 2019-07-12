@@ -31,7 +31,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/versionchecklib_file_paths" />
         </provider>
-
+        <activity
+            android:name=".bigimageviewpager.view.ImagePreviewActivity"
+            android:theme="@style/Theme.ImagePreview"/>
         <activity
             android:name=".versionchecklib.core.PermissionDialogActivity"
             android:launchMode="singleTask"

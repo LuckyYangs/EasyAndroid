@@ -1,4 +1,5 @@
 <resources>
+    <string name="indicator">%1$s/%2$s</string>
     <!--<string name="app_name">VersionCheckLib</string>-->
     <string name="versionchecklib_confirm">确认</string>
     <string name="versionchecklib_cancel">取消</string>
