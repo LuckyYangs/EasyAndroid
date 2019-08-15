@@ -29,6 +29,7 @@ public class ClassicsActivity extends BaseActivity {
     BaseresfresAdapter adapter;
     private EasyRefreshLayout refreshLayout;
     List<StringEntity> data =new ArrayList();
+    private int i = 1;
 
     @Override
     protected void setContentView() {
@@ -105,6 +106,7 @@ public class ClassicsActivity extends BaseActivity {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.setNoMoreData(false);
+                i++;
                 intdata();
                 adapter.notifyDataSetChanged();
                 refreshLayout.finishRefresh();
@@ -127,10 +129,18 @@ public class ClassicsActivity extends BaseActivity {
     }
     private  void intdata() {
         data.clear();
+        if(i==2){
+            for (int i=0;i<5;i++){
+                StringEntity stringEntity=new StringEntity();
+                stringEntity.setContent("第"+i+"条数据");
+                data.add(stringEntity);
+            }
+        }else{
         for (int i=0;i<15;i++){
             StringEntity stringEntity=new StringEntity();
             stringEntity.setContent("第"+i+"条数据");
             data.add(stringEntity);
+        }
         }
         lv.hideShimmerAdapter();
     }

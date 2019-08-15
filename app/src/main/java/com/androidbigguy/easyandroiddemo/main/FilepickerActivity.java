@@ -1,13 +1,21 @@
 package com.androidbigguy.easyandroiddemo.main;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.androidbigguy.easyandroid.luban.CompressionPredicate;
+import com.androidbigguy.easyandroid.luban.Luban;
+import com.androidbigguy.easyandroid.luban.OnCompressListener;
+import com.androidbigguy.easyandroid.luban.OnRenameListener;
 import com.androidbigguy.easyandroid.matisse.Matisse;
 import com.androidbigguy.easyandroid.matisse.MimeType;
 import com.androidbigguy.easyandroid.matisse.engine.impl.PicassoEngine;
@@ -17,10 +25,18 @@ import com.androidbigguy.easyandroid.utils.ActivityUtil;
 import com.androidbigguy.easyandroid.utils.ToastUtil;
 import com.androidbigguy.easyandroiddemo.R;
 
+import java.io.File;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class FilepickerActivity extends AppCompatActivity {
 Button button;
 ListView listView;
     private photoAdapter adapter;
+    List<String> datalist=new ArrayList<>();
     private static final int REQUEST_CODE_CHOOSE = 88;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +63,17 @@ ListView listView;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtil.show(getApplicationContext(),"就知道你要点，滚远点！！");
+
+                File file =new File(datalist.get(position));
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                options.inSampleSize = 1;
+
+                BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+
+                ToastUtil.show(getApplicationContext(),"图片大小："+options.outWidth+"*"+options.outHeight+":"+file.length()/1024+"kb");
+
             }
         });
     }
@@ -55,11 +81,46 @@ ListView listView;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
-            Matisse.obtainPathResult(data).get(0).toString();
-            adapter=new photoAdapter(FilepickerActivity.this, Matisse.obtainPathResult(data));
-            listView.setAdapter(adapter);
-//            mAdapter.setData(Matisse.obtainResult(data), Matisse.obtainPathResult(data),SampleActivity.this);
-//            Log.e("OnActivityResult ", String.valueOf(Matisse.obtainOriginalState(data)));
+//图片压缩
+            Luban.with(this)
+                    .load(Matisse.obtainPathResult(data))
+                    .ignoreBy(100)
+                    .setTargetDir(getPath())
+                    .setFocusAlpha(false)
+                    .filter(new CompressionPredicate() {//设置压缩限制，gif无法压缩，压缩之后是png格式。
+                        @Override
+                        public boolean apply(String path) {
+                            return !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"));
+                        }
+                    })
+                    .setRenameListener(new OnRenameListener() {//MD5重命名
+                        @Override
+                        public String rename(String filePath) {
+                            try {
+                                MessageDigest md = MessageDigest.getInstance("MD5");
+                                md.update(filePath.getBytes());
+                                return new BigInteger(1, md.digest()).toString(32);
+                            } catch (NoSuchAlgorithmException e) {
+                                e.printStackTrace();
+                            }
+                            return "";
+                        }
+                    })
+                    .setCompressListener(new OnCompressListener() {
+                        @Override
+                        public void onStart() { }
+
+                        @Override
+                        public void onSuccess(File file) {
+                            Log.i("file", file.length()+"");
+                             datalist.add(file.getAbsolutePath());
+                            adapter=new photoAdapter(FilepickerActivity.this, datalist);
+                            listView.setAdapter(adapter);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) { }
+                    }).launch();
         }
     }
     @Override
@@ -67,5 +128,13 @@ ListView listView;
         super.onBackPressed();
         ActivityUtil.startAty(this,MainActivity.class);
         finish();
+    }
+    private String getPath() {
+        String path = Environment.getExternalStorageDirectory() + "/XXXXX/image/";
+        File file = new File(path);
+        if (file.mkdirs()) {
+            return path;
+        }
+        return path;
     }
 }
